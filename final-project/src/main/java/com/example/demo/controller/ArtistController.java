@@ -11,13 +11,14 @@ import com.sun.media.jfxmedia.events.PlayerStateListener;
 import com.twilio.twiml.Play;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("api/artist")
 public class ArtistController {
 
@@ -28,16 +29,21 @@ public class ArtistController {
     @Autowired
     PlaylistRepository playlistRepo;
 
+    @GetMapping("/register")
+    public String renderRegister(){
+        return "register";
+    }
+
     @PostMapping("/register")
-    public String artistSignUp(@RequestBody Artist artist){
+    public String artistSignUp(String firstName, String lastName, String email, String password){
 
-        System.out.println(artist);
+//        System.out.println(artist);
 
 
-        String hashed = BCrypt.hashpw(artist.getPassword(), BCrypt.gensalt(12));
-        String email = artist.getEmail();
-        String firstName = artist.getFirstName();
-        String lastName = artist.getLastName();
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
+//        String email = artist.getEmail();
+//        String firstName = artist.getFirstName();
+//        String lastName = artist.getLastName();
 
 
         Artist newArtist = new Artist();
@@ -49,8 +55,8 @@ public class ArtistController {
 
         artistRepo.save(newArtist);
 
-        return "user created";
-
+//        return "user created";
+        return "register";
     }
 
     @PostMapping("/login")

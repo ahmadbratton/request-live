@@ -52,7 +52,7 @@ public class ShowController {
         return currentArtist.getShows();
     }
 
-    @PostMapping("/{showId}/add-playList")
+    @PostMapping("/{showId}/add-playlist")
     @CrossOrigin
     public String addPlaylistShow(@RequestBody Playlist addedPlaylist , @PathVariable int showId, HttpSession session){
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));

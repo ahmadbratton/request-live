@@ -67,7 +67,7 @@ public class QueueController {
         return "song added to queue successfully";
     }
 
-    @GetMapping("/{showId}/viewQueue")
+    @GetMapping("/{showId}/view-queue")
     List<Song> viewQueue(@PathVariable int showId) {
         Show currentShow = showRepo.findOne(showId);
         Queue currentQueue = currentShow.getSongQueue();
