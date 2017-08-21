@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>View Shows</title>
+</head>
+<body>
+    <h1>shows page</h1>
+    <div th:each="show : ${allShows}">
+        <p th:text="${show.locationName}"></p>
+        <p th:text="${show.locationAddress}"></p>
+        <form th:action="@{${show.showId}}" th:method="delete">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+    <form action="/api/artist/logout" method="post">
+        <button>Logout</button>
+    </form>
+</body>
+</html>

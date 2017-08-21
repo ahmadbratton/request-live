@@ -7,6 +7,8 @@ import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * Created by duhlig on 8/17/17.
  */
-@RestController
+@Controller
 @RequestMapping("/api")
 public class ShowController {
     @Autowired
@@ -28,29 +30,46 @@ public class ShowController {
     @Autowired
     PlaylistRepository playlistRepo;
 
+    @GetMapping("/create-show")
+    public String renderCreateShow(HttpSession session){
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
+        return "create-show";
+    }
+
     @PostMapping("/create-show")
     @CrossOrigin
-    public String createShow(@RequestBody Show newShow, HttpSession session) {
+    public String createShow(String locationName, String locationAddress, HttpSession session) {
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
+        Show newShow = new Show();
         List<Show> showList = createdBy.getShows();
         newShow.setStarted(false);
+        newShow.setLocationName(locationName);
+        newShow.setLocationAddress(locationAddress);
         showList.add(newShow);
         try {
             showRepo.save(newShow);
         } catch (Exception ex) {
             return "error creating event";
         }
-        return "event created successfully";
+        return "redirect:/api/view-shows";
     }
 
     @GetMapping("/view-shows")
     @CrossOrigin
-    public List<Show> allShows(HttpSession session) {
+    public String allShows(HttpSession session, Model model) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
-        return currentArtist.getShows();
+        List<Show> allShows = currentArtist.getShows();
+        model.addAttribute("allShows", allShows);
+        return "view-shows";
     }
+    
 
     @PostMapping("/{showId}/add-playlist")
     @CrossOrigin
@@ -81,7 +100,7 @@ public class ShowController {
 
     }
 
-    @DeleteMapping("/{showId}/delete")
+    @DeleteMapping("/{showId}")
     @CrossOrigin
     public String deleteShow(@PathVariable int showId , HttpSession session){
         try {
@@ -95,6 +114,6 @@ public class ShowController {
         } catch (Exception ex) {
             return "error deleting show";
         }
-        return "show deleted successfully";
+        return "redirect:/api/view-shows";
     }
 }
