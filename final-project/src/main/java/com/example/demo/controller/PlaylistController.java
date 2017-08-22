@@ -3,9 +3,11 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Artist;
 import com.example.demo.model.Playlist;
+import com.example.demo.model.Show;
 import com.example.demo.model.Song;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
+import com.example.demo.repository.ShowRepository;
 import com.example.demo.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,15 @@ public class PlaylistController {
 
     @Autowired
     SongRepository songRepo;
+
+    @Autowired
+    ShowRepository showRepo;
+
+//    @GetMapping("/{showId}/create-playlist")
+//    public String renderCreatePlaylistForShow(@PathVariable int showId) {
+//        Show currentShow = showRepo.findOne(showId);
+//        return "create-playlist";
+//    }
 
     @GetMapping("/create-playlist")
     public String renderCreatePlaylist(Model model, HttpSession session) {

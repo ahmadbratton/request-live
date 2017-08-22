@@ -76,6 +76,12 @@ public class ShowController {
     @GetMapping("/{showId}/add-playlist")
     public String renderAddPlaylist(@PathVariable int showId, Model model) {
         Show show = showRepo.findOne(showId);
+        Iterable<Playlist> playlists = playlistRepo.findAll();
+        ArrayList<Playlist> allPlaylists = new ArrayList<>();
+        for(Playlist currentPlaylist : playlists) {
+            allPlaylists.add(currentPlaylist);
+        }
+        model.addAttribute("allPlaylists", allPlaylists);
         model.addAttribute("show", show);
         return "add-playlist";
     }

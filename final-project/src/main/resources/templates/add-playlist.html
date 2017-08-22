@@ -8,5 +8,8 @@
     <h3 th:text="${show.locationName}"></h3>
     <h3 th:text="${show.locationAddress}"></h3>
     <h3>Select A Playlist For This Show Or <a href="/api/create-playlist">Create A New Playlist</a></h3>
+    <div th:each="playlist : ${allPlaylists}">
+        <p th:text="${playlist.playlistName}"></p>
+    </div>
 </body>
 </html>
