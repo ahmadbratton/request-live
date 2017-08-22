@@ -9,6 +9,8 @@ import com.example.demo.repository.QueueRepository;
 import com.example.demo.repository.ShowRepository;
 import com.example.demo.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * Created by duhlig on 8/20/17.
  */
-@RestController
+@Controller
 @RequestMapping("/api")
 public class QueueController {
     @Autowired
@@ -52,7 +54,7 @@ public class QueueController {
             } catch (Exception ex) {
                 return "problem making que or adding song to queue";
             }
-            return "que created and song added succesfully";
+            return "song-queue";
         } else {
            List<Song> queueSongs = showQueue.getSongs();
             queueSongs.add(selectedSong);
@@ -64,14 +66,20 @@ public class QueueController {
         } catch (Exception ex) {
             return "problem adding song to queue";
         }
-        return "song added to queue successfully";
+        return "redirect:/api/ " + showId +"/view-queue";
     }
 
     @GetMapping("/{showId}/view-queue")
-    List<Song> viewQueue(@PathVariable int showId) {
+    String viewQueue(@PathVariable int showId, Model model) {
         Show currentShow = showRepo.findOne(showId);
         Queue currentQueue = currentShow.getSongQueue();
         List<Song> songList = currentQueue.getSongs();
-        return songList;
+
+        model.addAttribute("songs", songList);
+
+
+
+
+        return "song-queue";
     }
 }

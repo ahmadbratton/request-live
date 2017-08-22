@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>user viewing an Artist's show</h1>
+<div th:each="songs: ${showSongs}">
+    <form th:action="@{ '/api/' + ${show.showId} + '/' + ${songs.songId}}" th:method="post" >
+    <p th:text="${songs.originalArtist}"></p>
+    <p th:text="${songs.songName}" > </p>
+    <p th:text="${songs.genre}" > </p>
+    <button type="submit" > add to que </button>
+    </form>
+</div>
+
+</body>
+</html>
