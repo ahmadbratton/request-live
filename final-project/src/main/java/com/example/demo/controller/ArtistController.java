@@ -12,6 +12,7 @@ import com.twilio.twiml.Play;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -38,20 +39,16 @@ public class ArtistController {
     public String artistSignUp(String firstName, String lastName, String email, String password){
 
 //        System.out.println(artist);
-
-
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
 //        String email = artist.getEmail();
 //        String firstName = artist.getFirstName();
 //        String lastName = artist.getLastName();
-
 
         Artist newArtist = new Artist();
         newArtist.setFirstName(firstName);
         newArtist.setLastName(lastName);
         newArtist.setEmail(email);
         newArtist.setPassword(hashed);
-
 
         artistRepo.save(newArtist);
 
@@ -60,20 +57,33 @@ public class ArtistController {
     }
 
     @PostMapping("/login")
-    public String artistLogin(@RequestBody Artist artist, HttpSession session){
+    public String artistLogin(String email, String password, HttpSession session, Model model){
 
-        Artist foundArtist = artistRepo.findByEmail(artist.getEmail());
+        Artist foundArtist = artistRepo.findByEmail(email);
 
         if(foundArtist == null){
-            return "no artist found";
+            String error = "username and/or password is incorrect";
+            model.addAttribute("error", error);
+            return "login";
         }
-        if (BCrypt.checkpw(artist.getPassword(), foundArtist.getPassword())){
+        if (BCrypt.checkpw(password, foundArtist.getPassword())){
             session.setAttribute("artistId", foundArtist.getArtistId());
-            return "user successfully logged in";
+            return "redirect:/api/view-shows";
 
         }
 
         return "No email/password combination exsist";
+    }
+
+    @GetMapping("/login")
+    public String renderLogin() {
+        return "login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/api/artist/login";
     }
 
 //    @PostMapping("/create-song")
@@ -96,7 +106,5 @@ public class ArtistController {
 //        return "song created successfully";
 //
 //    }
-
-
 
 }
