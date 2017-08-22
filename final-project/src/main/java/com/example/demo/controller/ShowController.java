@@ -50,12 +50,15 @@ public class ShowController {
         newShow.setLocationName(locationName);
         newShow.setLocationAddress(locationAddress);
         showList.add(newShow);
+
         try {
             showRepo.save(newShow);
+
         } catch (Exception ex) {
             return "error creating event";
         }
-        return "redirect:/api/view-shows";
+        int showId = newShow.getShowId();
+        return "redirect:/api/"+showId+"/add-playlist";
     }
 
     @GetMapping("/view-shows")
@@ -69,7 +72,13 @@ public class ShowController {
         model.addAttribute("allShows", allShows);
         return "view-shows";
     }
-    
+
+    @GetMapping("/{showId}/add-playlist")
+    public String renderAddPlaylist(@PathVariable int showId) {
+        Show show = showRepo.findOne(showId);
+        return "add-playlist";
+    }
+
 
     @PostMapping("/{showId}/add-playlist")
     @CrossOrigin
@@ -79,7 +88,6 @@ public class ShowController {
         List<Playlist> playlists = show.getPlaylist();
         ArrayList<Playlist> artistPlaylist = new ArrayList<>();
         currentArtist.getArtistPlaylists().forEach(artistPlaylist::add);
-
 
         for (Playlist listChoice: artistPlaylist) {
             if (listChoice.getPlaylistName().equals(addedPlaylist.getPlaylistName())){
