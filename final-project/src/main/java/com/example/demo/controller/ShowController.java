@@ -74,8 +74,9 @@ public class ShowController {
     }
 
     @GetMapping("/{showId}/add-playlist")
-    public String renderAddPlaylist(@PathVariable int showId) {
+    public String renderAddPlaylist(@PathVariable int showId, Model model) {
         Show show = showRepo.findOne(showId);
+        model.addAttribute("show", show);
         return "add-playlist";
     }
 
@@ -108,7 +109,7 @@ public class ShowController {
 
     }
 
-    @DeleteMapping("/{showId}")
+    @DeleteMapping("/{showId}/delete")
     @CrossOrigin
     public String deleteShow(@PathVariable int showId , HttpSession session){
         try {

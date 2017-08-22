@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create Playlist</title>
+</head>
+<body>
+    <div th:if="${nameOfPlaylist} == null">
+        <form action="/api/create-playlist" method="post">
+            <input type="text" name="playlistName" placeholder="Playlist Name"/>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div th:if="${nameOfPlaylist} != null">
+        <h4 th:text="${nameOfPlaylist}"></h4>
+        <form th:action="@{'/api/' + ${playlistId} + '/add-song'}" th:method="post">
+            <input type="text" name="originalArtist" placeholder="Original Artist"/>
+            <input type="text" name="songName" placeholder="Song Name"/>
+            <input type="text" name="genre" placeholder="Genre"/>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div th:if="${songList} != null">
+        <div th:each="song : ${songList}">
+            <p th:text="${song.originalArtist}"></p>
+            <p th:text="${song.songName}"></p>
+            <p th:text="${song.genre}"></p>
+        </div>
+    </div>
+
+</body>
+</html>

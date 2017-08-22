@@ -9,7 +9,7 @@
     <div th:each="show : ${allShows}">
         <p th:text="${show.locationName}"></p>
         <p th:text="${show.locationAddress}"></p>
-        <form th:action="@{${show.showId}}" th:method="delete">
+        <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
             <button type="submit">Delete</button>
         </form>
     </div>

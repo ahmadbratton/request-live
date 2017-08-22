@@ -9,6 +9,7 @@ import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -28,29 +29,50 @@ public class PlaylistController {
     @Autowired
     SongRepository songRepo;
 
+    @GetMapping("/create-playlist")
+    public String renderCreatePlaylist(Model model, HttpSession session) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
+        return "create-playlist";
+    }
+
     @PostMapping("/create-playlist")
     @CrossOrigin
-    public String createPlaylist(@RequestBody Playlist playlist , HttpSession session){
+    public String createPlaylist(String playlistName , HttpSession session, Model model){
 
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         System.out.println(createdBy);
 
         List<Playlist> ArtistPlaylist = createdBy.getArtistPlaylists();
+        Playlist playlist = new Playlist();
+        playlist.setPlaylistName(playlistName);
 
         ArtistPlaylist.add(playlist);
+        model.addAttribute("nameOfPlaylist", playlist.getPlaylistName());
 
         try {
             playlistRepo.save(playlist);
         } catch (Exception ex) {
             return "error creating playlist";
         }
-        return "playlist created successfully";
+        int playlistId = playlist.getPlaylistId();
+        return "redirect:/api/"+playlistId+"/add-song";
+    }
+
+    @GetMapping("/{playlistId}/add-song")
+    public String renderAddSong(@PathVariable int playlistId, Model model) {
+        Playlist currentPlaylist = playlistRepo.findOne(playlistId);
+
+        model.addAttribute("nameOfPlaylist", currentPlaylist.getPlaylistName());
+        model.addAttribute("songList", currentPlaylist.getSongsList());
+        return "create-playlist";
     }
 
 
     @PostMapping("/{playlistId}/add-song")
     @CrossOrigin
-    public String addSong(@PathVariable int playlistId , @RequestBody Song song) {
+    public String addSong(@PathVariable int playlistId , String originalArtist, String songName, String genre) {
         Boolean Newsong = false;
 
         Playlist currentplayList = playlistRepo.findOne(playlistId);
@@ -60,6 +82,11 @@ public class PlaylistController {
         ArrayList<Song> allSongs = new ArrayList<>();
 
         songRepo.findAll().forEach(allSongs::add);
+
+        Song song = new Song();
+        song.setOriginalArtist(originalArtist);
+        song.setSongName(songName);
+        song.setGenre(genre);
 
         if(allSongs.size() != 0) {
             for (int i = 0; i < allSongs.size(); i++) {
@@ -88,7 +115,7 @@ public class PlaylistController {
         }
 
 
-        return "songs were added to play list";
+        return "redirect:/api/"+playlistId+"/add-song";
     }
 
     @GetMapping("/view-playlist")
