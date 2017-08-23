@@ -9,12 +9,14 @@ import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
 import com.example.demo.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
@@ -31,12 +33,15 @@ public class UserController {
 
     @GetMapping("/{showId}/artist-playlist")
     @CrossOrigin
-    public List<Song> userSongView(@PathVariable int showId) {
+    public String userSongView(@PathVariable int showId, Model model) {
         Show showAttending = showRepo.findOne(showId);
         Playlist showPlaylist = showAttending.getPlaylist();
         List<Song> showSongs = showPlaylist.getSongsList();
 
-        return showSongs;
+        model.addAttribute("showSongs", showSongs);
+        model.addAttribute("show",showAttending);
+
+        return "user-view-show";
 
     }
 
