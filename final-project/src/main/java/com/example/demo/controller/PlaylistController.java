@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.model.Artist;
-import com.example.demo.model.Playlist;
-import com.example.demo.model.Show;
-import com.example.demo.model.Song;
+import com.example.demo.model.*;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
@@ -48,18 +45,18 @@ public class PlaylistController {
         return "create-playlist";
     }
 
-    @PostMapping("/create-playlist")
+    @PostMapping("/{showId}/create-playlist")
     @CrossOrigin
-    public String createPlaylist(String playlistName , HttpSession session, Model model){
-
+    public String createPlaylist(String playlistName , HttpSession session, Model model, @PathVariable int showId){
+        Show show = showRepo.findOne(showId);
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         System.out.println(createdBy);
 
         List<Playlist> ArtistPlaylist = createdBy.getArtistPlaylists();
         Playlist playlist = new Playlist();
         playlist.setPlaylistName(playlistName);
-
         ArtistPlaylist.add(playlist);
+
         model.addAttribute("nameOfPlaylist", playlist.getPlaylistName());
 
         try {
@@ -68,7 +65,27 @@ public class PlaylistController {
             return "error creating playlist";
         }
         int playlistId = playlist.getPlaylistId();
-        return "redirect:/api/"+playlistId+"/add-song";
+        Booleans.setRenderSongCreator(true);
+        return "redirect:/api/"+showId + "/" + playlistId+"/add-song";
+    }
+
+    @GetMapping("/{showId}/{playlistId}/add-song")
+    public String renderAddSongPlaylist(@PathVariable int showId, @PathVariable int playlistId, Model model, HttpSession session) {
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        Playlist currentPlaylist = playlistRepo.findOne(playlistId);
+        Show show = showRepo.findOne(showId);
+        Booleans.setRenderPlaylistCreator(true);
+//        Show show = showRepo.findOne(showId);
+        List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
+        System.out.println(Booleans.getRenderSongCreator());
+        System.out.println(Booleans.getRenderPlaylistCreator());
+        model.addAttribute("allPlaylists", allPlaylists);
+        model.addAttribute("show", show);
+        model.addAttribute("nameOfPlaylist", currentPlaylist.getPlaylistName());
+        model.addAttribute("songList", currentPlaylist.getSongsList());
+        model.addAttribute("renderPlaylistCreator", Booleans.getRenderPlaylistCreator());
+        model.addAttribute("renderSongCreator", Booleans.getRenderSongCreator());
+        return "add-playlist";
     }
 
     @GetMapping("/{playlistId}/add-song")
@@ -81,9 +98,10 @@ public class PlaylistController {
     }
 
 
-    @PostMapping("/{playlistId}/add-song")
+    @PostMapping("/{showId}/{playlistId}/add-song")
     @CrossOrigin
-    public String addSong(@PathVariable int playlistId , String originalArtist, String songName, String genre) {
+    public String addSong(@PathVariable int playlistId , @PathVariable int showId, String originalArtist, String songName, String genre) {
+        Show show = showRepo.findOne(showId);
         Boolean Newsong = false;
 
         Playlist currentplayList = playlistRepo.findOne(playlistId);
@@ -126,7 +144,7 @@ public class PlaylistController {
         }
 
 
-        return "redirect:/api/"+playlistId+"/add-song";
+        return "redirect:/api/"+ showId + "/" + playlistId + "/add-song";
     }
 
     @GetMapping("/view-playlist")
@@ -135,5 +153,11 @@ public class PlaylistController {
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
         return artistPlaylist;
+    }
+
+    @PostMapping("/{showId}/submit-playlist")
+    public String submitPlaylist(@PathVariable int showId) {
+        Show show = showRepo.findOne(showId);
+        return "redirect:/api/" + showId + "/add-playlist";
     }
 }

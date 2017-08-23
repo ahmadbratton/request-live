@@ -33,11 +33,8 @@ public class UserController {
     @CrossOrigin
     public List<Song> userSongView(@PathVariable int showId) {
         Show showAttending = showRepo.findOne(showId);
-        List<Playlist> showPlaylist = showAttending.getPlaylist();
-        List<Song> showSongs = new ArrayList<>();
-        for (Playlist playlist : showPlaylist) {
-            showSongs = playlist.getSongsList();
-        }
+        Playlist showPlaylist = showAttending.getPlaylist();
+        List<Song> showSongs = showPlaylist.getSongsList();
 
         return showSongs;
 
