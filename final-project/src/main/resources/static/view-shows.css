@@ -1,0 +1,53 @@
+
+
+.showContainer{
+    display:flex;
+    flex-direction: row;
+}
+
+.allShows{
+    display: flex;
+    border: 1px solid grey;
+    border-radius: 8px ;
+    margin: 10px;
+    width: 250px;
+    height: 250px;
+    background-color: lightgray;
+
+}
+.showInfo{
+    width: 100%;
+}
+
+.navBar{
+    margin-top: 10px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-top:17px;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+.showBtn{
+    display: flex;
+    flex-direction: row;
+    margin-top: 80px;
+    justify-content: center;
+
+}
+.showBtn div{
+    display: flex;
+    margin: 0 10px;
+}

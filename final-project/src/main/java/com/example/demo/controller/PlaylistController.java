@@ -153,7 +153,7 @@ public class PlaylistController {
 
     @GetMapping("/view-playlist")
     @CrossOrigin
-    public List<Playlist> viewPlaylist(HttpSession session){
+    public List<Playlist> viewPlaylists(HttpSession session){
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
         return artistPlaylist;
@@ -163,5 +163,21 @@ public class PlaylistController {
     public String submitPlaylist(@PathVariable int showId) {
         Show show = showRepo.findOne(showId);
         return "redirect:/api/" + showId + "/add-playlist";
+    }
+
+    @GetMapping("/{playlistId}/view-playlist")
+    public String viewPlaylistById(@PathVariable int playlistId , Model model ){
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        model.addAttribute("playlist",playlist);
+        model.addAttribute("songs", playlist.getSongsList());
+        return "view-playlist";
+
+
+    }
+
+    @PostMapping("/{playlistId}/view-playlist")
+    public String viewPlaylist(@PathVariable int playlistId){
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        return "redirect:/api/" + playlistId + "/view-playlist";
     }
 }
