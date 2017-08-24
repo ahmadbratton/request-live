@@ -48,8 +48,12 @@ public class PlaylistController {
         Playlist playlist = new Playlist();
         playlist.setPlaylistName(playlistName);
 
+
+
         ArtistPlaylist.add(playlist);
         model.addAttribute("nameOfPlaylist", playlist.getPlaylistName());
+
+
 
         try {
             playlistRepo.save(playlist);
@@ -59,6 +63,7 @@ public class PlaylistController {
         int playlistId = playlist.getPlaylistId();
         return "redirect:/api/"+playlistId+"/add-song";
     }
+
 
     @GetMapping("/{playlistId}/add-song")
     public String renderAddSong(@PathVariable int playlistId, Model model) {
