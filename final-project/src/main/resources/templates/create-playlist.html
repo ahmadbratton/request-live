@@ -26,6 +26,9 @@
             <p th:text="${song.songName}"></p>
             <p th:text="${song.genre}"></p>
         </div>
+        <form action="/api/submit-playlist" method="post">
+            <button type="submit">Create Playlist</button>
+        </form>
     </div>
 
 </body>

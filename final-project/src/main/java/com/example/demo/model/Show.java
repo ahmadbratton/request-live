@@ -29,8 +29,8 @@ public class Show {
     @Column(name="endTime")
     private Date endTime;
 
-    @OneToMany
-    private List<Playlist> playlist;
+    @ManyToOne
+    private Playlist playlist;
 
 //    @Column(name="songQueue")
 //    private ArrayList<Song> songQueue;
@@ -43,7 +43,7 @@ public class Show {
     public Show() {
     }
 
-    public Show(String locationName, String locationAddress, Date startTime, Date endTime, List<Playlist> playlist, Boolean isStarted) {
+    public Show(String locationName, String locationAddress, Date startTime, Date endTime, Playlist playlist, Boolean isStarted) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.startTime = startTime;
@@ -99,11 +99,11 @@ public class Show {
         this.endTime = endTime;
     }
 
-    public List<Playlist> getPlaylist() {
+    public Playlist getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Playlist> playlist) {
+    public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
     }
 

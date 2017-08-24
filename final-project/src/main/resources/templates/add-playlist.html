@@ -7,6 +7,42 @@
 <body>
     <h3 th:text="${show.locationName}"></h3>
     <h3 th:text="${show.locationAddress}"></h3>
-    <h3>Select A Playlist For This Show Or <a href="/api/create-playlist">Create A New Playlist</a></h3>
+    <h3>Select A Playlist For This Show</h3>
+    <form th:action="@{'/api/' + ${showId} + '/render-create-playlist'}" th:method="post">
+        <button type="submit">Create New Playlist</button>
+    </form>
+    <div th:if="${renderPlaylistCreator} == true">
+        <div th:if="${nameOfPlaylist} == null">
+            <form th:action="@{'/api/' + ${showId} + '/create-playlist'}" th:method="post">
+                <input type="text" name="playlistName" placeholder="Playlist Name"/>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div th:if="${renderSongCreator} == true">
+            <h4 th:text="${nameOfPlaylist}"></h4>
+            <form th:action="@{'/api/' + ${showId} + '/' + ${playlistId} + '/add-song'}" th:method="post">
+                <input type="text" name="originalArtist" placeholder="Original Artist"/>
+                <input type="text" name="songName" placeholder="Song Name"/>
+                <input type="text" name="genre" placeholder="Genre"/>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div th:if="${songList} != null">
+            <div th:each="song : ${songList}">
+                <p th:text="${song.originalArtist}"></p>
+                <p th:text="${song.songName}"></p>
+                <p th:text="${song.genre}"></p>
+            </div>
+            <form th:action="@{'/api/' + ${showId} + '/submit-playlist'}" th:method="post">
+                <button type="submit">Create Playlist</button>
+            </form>
+        </div>
+    </div>
+    <div th:each="playlist : ${allPlaylists}">
+        <p th:text="${playlist.playlistName}"></p>
+        <form th:action="@{'/api/' + ${showId} + '/' + ${playlist.playlistId} + '/add-playlist'}" th:method="post">
+            <button type="submit">Add Playlist To Show</button>
+        </form>
+    </div>
 </body>
 </html>

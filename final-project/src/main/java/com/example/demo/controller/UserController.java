@@ -35,11 +35,8 @@ public class UserController {
     @CrossOrigin
     public String userSongView(@PathVariable int showId, Model model) {
         Show showAttending = showRepo.findOne(showId);
-        List<Playlist> showPlaylist = showAttending.getPlaylist();
-        List<Song> showSongs = new ArrayList<>();
-        for (Playlist playlist : showPlaylist) {
-            showSongs = playlist.getSongsList();
-        }
+        Playlist showPlaylist = showAttending.getPlaylist();
+        List<Song> showSongs = showPlaylist.getSongsList();
 
         model.addAttribute("showSongs", showSongs);
         model.addAttribute("show",showAttending);

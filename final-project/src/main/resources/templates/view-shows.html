@@ -9,6 +9,10 @@
     <div th:each="show : ${allShows}">
         <p th:text="${show.locationName}"></p>
         <p th:text="${show.locationAddress}"></p>
+        <p th:text="${show.playlist.playlistName}"></p>
+        <form action="">
+            <button type="submit">View Playlist</button>
+        </form>
         <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
             <button type="submit">Delete</button>
         </form>
