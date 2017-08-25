@@ -7,14 +7,29 @@
 </head>
 <body>
 <h1>user viewing an Artist's show</h1>
-<div th:each="songs: ${showSongs}">
-    <form th:action="@{ '/api/' + ${show.showId} + '/' + ${songs.songId}}" th:method="post" >
-    <p th:text="${songs.originalArtist}"></p>
-    <p th:text="${songs.songName}" > </p>
-    <p th:text="${songs.genre}" > </p>
-    <button type="submit" > add to que </button>
-    </form>
-</div>
-
+<table class="table table-hover table-inverse">
+    <thead>
+    <tr>
+        <th>original Artist</th>
+        <th> song name</th>
+        <th> genre </th>
+        <th>add song to queue</th>
+    </tr>
+    </thead>
+    <div th:each="songs: ${showSongs}">
+        <form th:action="@{ '/api/' + ${show.showId} + '/' + ${songs.songId}}" th:method="post" >
+            <tbody>
+            <tr>
+                <td th:text="${songs.originalArtist}" ></td>
+                <td  th:text="${songs.songName}"> </td>
+                <td th:text="${songs.genre}" ></td>
+                <td>
+        <button type="submit" > add to que </button>
+                </td>
+            </tr>
+            </tbody>
+        </form>
+    </div>
+</table>
 </body>
 </html>
