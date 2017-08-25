@@ -73,7 +73,12 @@ public class ShowController {
         }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Show> allShows = currentArtist.getShows();
+        String artistFirstName = currentArtist.getFirstName().toUpperCase();
+        String artistLastName = currentArtist.getLastName().toUpperCase();
         model.addAttribute("allShows", allShows);
+        model.addAttribute("currentArtist", currentArtist);
+        model.addAttribute("artistFirstName", artistFirstName);
+        model.addAttribute("artistLastName", artistLastName);
         return "view-shows";
     }
 

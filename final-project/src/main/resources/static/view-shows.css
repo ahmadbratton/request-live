@@ -1,0 +1,130 @@
+
+
+.showContainer{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.allShows{
+    display: flex;
+    border: 1px solid grey;
+    margin: 10px;
+    width: 45%;
+    height: 5%;
+    /*background-color: lightgray;*/
+    /*background-image: url("./img/pexels-photo-164879.jpeg");*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow: 4px 7px 12px 0px rgba(0,0,0,0.75);
+
+
+}
+
+.showInfo p{
+    margin:10px;
+}
+
+.showInfo{
+    width: 100%;
+    justify-content: center;
+    display:flex;
+}
+
+.info-container {
+    display: flex;
+}
+
+.show-info-playlist {
+    flex-basis: 20%;
+}
+
+.info-artist-location {
+    flex-basis: 50%;
+    border-left: solid red 3px;
+    border-right: solid red 3px;
+}
+
+.info-artist-location p {
+    margin: 0px;
+}
+
+.show-info-name {
+    font-size: 80%;
+    margin-bottom: 0px;
+}
+
+.show-info-address {
+    font-size: 80%;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.showInfo-paragraphs {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.navBar{
+    margin-top: 10px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-top:17px;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+.showBtn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 20%;
+
+}
+
+.barcode {
+    flex-basis: 20%;
+    background-image: url("./img/barcode.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.barcode p {
+    display: none;
+}
+
+.btn-outline-dark {
+    font-size: 80%;
+    margin: 5%;
+}
+
+#live {
+    margin-top: 8%;
+    background-color: red;
+    color: white;
+    font-size: 90%;
+    opacity: .7;
+}
+
+#asterisk {
+    margin-bottom: -2%;
+}
+
+#artist-name {
+    font-size: 140%;
+}
+

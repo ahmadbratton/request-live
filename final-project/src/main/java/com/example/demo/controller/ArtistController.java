@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Artist;
 import com.example.demo.model.Playlist;
+import com.example.demo.model.Show;
 import com.example.demo.model.Song;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
@@ -84,6 +85,21 @@ public class ArtistController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/api/artist/login";
+    }
+
+    @GetMapping("/home")
+    public String artistHome(HttpSession session , Model model){
+        if (session.getAttribute("artistId") == null){
+            return "redirect:/api/artist/login";
+        }
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        List<Show> artistShows = currentArtist.getShows();
+        List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
+        model.addAttribute("artist", currentArtist);
+        model.addAttribute("playlists", artistPlaylist);
+        model.addAttribute("shows", artistShows);
+        return "home";
+
     }
 
 //    @PostMapping("/create-song")
