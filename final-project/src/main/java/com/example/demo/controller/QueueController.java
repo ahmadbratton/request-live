@@ -54,7 +54,7 @@ public class QueueController {
             } catch (Exception ex) {
                 return "problem making que or adding song to queue";
             }
-            return "song-queue";
+            return "redirect:/api/ " + showId +"/view-queue";
         } else {
            List<Song> queueSongs = showQueue.getSongs();
             queueSongs.add(selectedSong);

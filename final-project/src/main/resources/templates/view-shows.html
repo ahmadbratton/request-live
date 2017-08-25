@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8"/>
     <title>View Shows</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/view-shows.css}"/>
 </head>
 <body>
+    <div class="navBar" >
+        <nav>
+            <div class="tags" >
+                <div class="showCreateTag">
+                    <a href="create-show" > Create a new Show  </a>
+                </div>
+                <div class="playlistCreateTag">
+                    <a href="create-playlist" > Create a new Playlist  </a>
+                </div>
+            </div>
+        </nav>
+    </div>
     <h1>shows page</h1>
-    <div th:each="show : ${allShows}">
-        <p th:text="${show.locationName}"></p>
-        <p th:text="${show.locationAddress}"></p>
-        <p th:text="${show.playlist.playlistName}"></p>
-        <form action="">
-            <button type="submit">View Playlist</button>
-        </form>
-        <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
-            <button type="submit">Delete</button>
-        </form>
+    <div class="showContainer" >
+        <div class="allShows" th:each="show : ${allShows}">
+            <div class="showInfo" >
+                <p th:text=" 'location Name: ' + ${show.locationName}"></p>
+                <p th:text=" 'location Address: ' + ${show.locationAddress}"></p>
+                <p th:text=" 'playlist: ' + ${show.playlist.playlistName}"></p>
+                <div class="showBtn" >
+                    <div class="viewPlaylistBtn">
+                        <form th:action="@{${show.playlist.playlistId} + '/view-playlist'}">
+                            <button class="btn btn-outline-dark" type="submit" th:text=" 'view ' + ${show.playlist.playlistName}" ></button>
+                        </form>
+                    </div>
+                    <div class="delete">
+                        <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
+                            <button class="btn btn-outline-dark" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <form action="/api/artist/logout" method="post">
         <button>Logout</button>
