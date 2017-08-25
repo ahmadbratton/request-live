@@ -48,9 +48,15 @@ public class PlaylistController {
     }
 
     @PostMapping("/create-playlist")
-    public String createPlaylist(String playlistName){
+    public String createPlaylist(String playlistName, HttpSession session){
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId") );
+        List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
+
         Playlist newPlaylist = new Playlist();
         newPlaylist.setPlaylistName(playlistName);
+
+        artistPlaylist.add(newPlaylist);
+
         playlistRepo.save(newPlaylist);
         int playlistId = newPlaylist.getPlaylistId();
         return "redirect:/api/" + playlistId + "/add-song";
