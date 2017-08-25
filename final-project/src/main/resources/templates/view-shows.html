@@ -32,7 +32,7 @@
                             <button class="btn btn-outline-dark" type="submit" th:text=" 'view ' + ${show.playlist.playlistName}" ></button>
                         </form>
                     </div>
-                    <div class="viewPlaylistBtn">
+                    <div class="delete">
                         <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
                             <button class="btn btn-outline-dark" type="submit">Delete</button>
                         </form>

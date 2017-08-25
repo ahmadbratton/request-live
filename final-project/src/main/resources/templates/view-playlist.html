@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/view-OnePlaylist.css}"/>
 </head>
 <body>
-<h1>playlist </h1>
+<div class="navBar" >
+    <nav>
+        <div class="tags" >
+            <div class="showCreateTag">
+                <a href="create-show" > Create a new Show  </a>
+            </div>
+            <div class="playlistCreateTag">
+                <a href="create-playlist" > Create a new Playlist  </a>
+            </div>
+            <div>
+                <a th:href="@{/api/view-shows}" > view Shows  </a>
+            </div>
+        </div>
+    </nav>
+</div>
+<h1 th:text="${playlist.playlistName}" > </h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>original Artist</th>
+            <th> song name</th>
+            <th> genre </th>
+        </tr>
+        </thead>
+        <div th:each="ps: ${songs}" >
+        <tbody>
+        <tr>
+            <td th:text="${ps.originalArtist}" ></td>
+            <td  th:text="${ps.songName}"> </td>
+            <td th:text="${ps.genre}" ></td>
+        </tr>
+        </tbody>
+        </div>
+    </table>
+    <!--<p th:text="${ps.originalArtist}"></p>-->
+    <!--<p th:text="${ps.songName}" > </p>-->
+    <!--<p th:text="${ps.genre}" > </p>-->
 
 </body>
 </html>

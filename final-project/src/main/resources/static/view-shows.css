@@ -3,6 +3,7 @@
 .showContainer{
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .allShows{
@@ -12,9 +13,19 @@
     margin: 10px;
     width: 250px;
     height: 250px;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
+    background-image: url("./img/pexels-photo-164879.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow: 4px 7px 12px 0px rgba(0,0,0,0.75);
+    color: white;
 
 }
+
+.showInfo p{
+    margin:10px;
+}
+
 .showInfo{
     width: 100%;
 }

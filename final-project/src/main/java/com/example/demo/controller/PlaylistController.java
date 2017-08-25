@@ -42,7 +42,18 @@ public class PlaylistController {
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
         }
+
+
         return "create-playlist";
+    }
+
+    @PostMapping("/create-playlist")
+    public String createPlaylist(String playlistName){
+        Playlist newPlaylist = new Playlist();
+        newPlaylist.setPlaylistName(playlistName);
+        playlistRepo.save(newPlaylist);
+        int playlistId = newPlaylist.getPlaylistId();
+        return "redirect:/api/" + playlistId + "/add-song";
     }
 
     @PostMapping("/{showId}/create-playlist")
@@ -100,6 +111,50 @@ public class PlaylistController {
         model.addAttribute("songList", currentPlaylist.getSongsList());
         return "create-playlist";
     }
+
+    @PostMapping("/{playlistId}/add-song")
+    public String addPlaylist_song(@PathVariable int playlistId, String originalArtist, String songName, String genre ){
+        Boolean Newsong = false;
+
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        List<Song> songList = playlist.getSongsList();
+
+        ArrayList<Song> Songs = new ArrayList<>();
+
+        songRepo.findAll().forEach(Songs::add);
+
+        Song song = new Song();
+        song.setOriginalArtist(originalArtist);
+        song.setSongName(songName);
+        song.setGenre(genre);
+
+        if(Songs.size() != 0) {
+            for (int i = 0; i < Songs.size(); i++) {
+                if (Songs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && Songs.get(i).getSongName().equals(song.getSongName())) {
+                    songList.add(song);
+                    System.out.println("song already exist");
+                } else {
+                    Newsong = true;
+                }
+            }
+            if (Newsong) {
+                songRepo.save(song);
+                songList.add(song);
+            }
+        }
+        else{
+            songRepo.save(song);
+            songList.add(song);
+        }
+
+        try {
+
+            playlistRepo.save(playlist);
+        } catch (Exception ex) {
+            return "songs could not be Added";
+        }
+        return "redirect:/api/"+ playlistId + "/add-song";
+     }
 
 
     @PostMapping("/{showId}/{playlistId}/add-song")
@@ -180,4 +235,11 @@ public class PlaylistController {
         Playlist playlist = playlistRepo.findOne(playlistId);
         return "redirect:/api/" + playlistId + "/view-playlist";
     }
+
+    @PostMapping("/{playlistId}/playlist-created")
+    public String Playlistsubmit(@PathVariable int playlistId){
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
 }

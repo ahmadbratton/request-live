@@ -22,12 +22,25 @@
         </form>
     </div>
     <div th:if="${songList} != null">
+        <table class="table">
+        <thead>
+        <tr>
+            <th>original Artist</th>
+            <th> song name</th>
+            <th> genre </th>
+        </tr>
+        </thead>
         <div th:each="song : ${songList}">
-            <p th:text="${song.originalArtist}"></p>
-            <p th:text="${song.songName}"></p>
-            <p th:text="${song.genre}"></p>
+            <tbody>
+            <tr>
+                <td th:text="${song.originalArtist}" ></td>
+                <td  th:text="${song.songName}"> </td>
+                <td th:text="${song.genre}" ></td>
+            </tr>
+            </tbody>
         </div>
-        <form action="/api/submit-playlist" method="post">
+        </table>
+        <form th:action="@{'/api/' + ${playlistId} + '/playlist-created'}" method="post">
             <button type="submit">Create Playlist</button>
         </form>
     </div>
