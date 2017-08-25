@@ -20,26 +20,44 @@
         </nav>
     </div>
     <h1>shows page</h1>
-    <div class="showContainer" >
-        <div class="allShows" th:each="show : ${allShows}">
+    <div class="showContainer" th:each="show : ${allShows}">
+        <div class="allShows" >
             <div class="showInfo" >
-                <p th:text=" 'location Name: ' + ${show.locationName}"></p>
-                <p th:text=" 'location Address: ' + ${show.locationAddress}"></p>
-                <p th:text=" 'playlist: ' + ${show.playlist.playlistName}"></p>
-                <div class="showBtn" >
-                    <div class="viewPlaylistBtn">
-                        <form th:action="@{${show.playlist.playlistId} + '/view-playlist'}">
-                            <button class="btn btn-outline-dark" type="submit" th:text=" 'view ' + ${show.playlist.playlistName}" ></button>
-                        </form>
-                    </div>
-                    <div class="delete">
-                        <form th:action="@{${show.showId} + '/delete'}" th:method="delete">
-                            <button class="btn btn-outline-dark" type="submit">Delete</button>
-                        </form>
+                <div class="showInfo-paragraphs">
+                    <div class="info-container">
+                        <div class="info-playlist">
+                            <p class ="show-info-playlist" th:text=" 'Playlist: ' + ${show.playlist.playlistName}"></p>
+                            <div class="showBtn" >
+                                <div class="viewPlaylistBtn">
+                                    <form class="view-playlist-form" th:action="@{${show.playlist.playlistId} + '/view-playlist'}">
+                                        <button class="btn btn-outline-dark" type="submit" th:text=" 'View ' + ${show.playlist.playlistName}" ></button>
+                                    </form>
+                                </div>
+                                <div class="delete">
+                                    <div class="delete-button">
+                                        <form class="delete-show-form" th:action="@{${show.showId} + '/delete'}" th:method="delete">
+                                            <button class="btn btn-outline-dark" type="submit">Delete Show</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-artist-location">
+                            <p id="live">LIVE IN CONCERT</p>
+                            <p id="artist-name" th:text="${artistFirstName} + ' ' + ${artistLastName}"></p>
+                            <p id="asterisk">******</p>
+                            <p class ="show-info-name" th:text="${show.locationName}"></p>
+                            <p class ="show-info-address" th:text="${show.locationAddress}"></p>
+                        </div>
+                        <div class="barcode">
+                            <p>Invisible p tag</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <form action="/api/artist/logout" method="post">
         <button>Logout</button>
