@@ -54,7 +54,7 @@ public class ArtistController {
         artistRepo.save(newArtist);
 
 //        return "user created";
-        return "register";
+        return "redirect:/api/artist/login";
     }
 
     @PostMapping("/login")

@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Artist;
-import com.example.demo.model.Booleans;
-import com.example.demo.model.Playlist;
-import com.example.demo.model.Show;
+import com.example.demo.model.*;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
@@ -152,5 +149,39 @@ public class ShowController {
             return "error deleting show";
         }
         return "redirect:/api/view-shows";
+    }
+
+    @PostMapping("/start-show/{showId}")
+    public String startShow(@PathVariable int showId) {
+        Show currentShow = showRepo.findOne(showId);
+        currentShow.setStarted(true);
+        System.out.println(currentShow.getStarted());
+        showRepo.save(currentShow);
+        return "redirect:/api/start-show/" +showId;
+    }
+
+    @GetMapping("/start-show/{showId}")
+    public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
+
+        Show currentShow = showRepo.findOne(showId);
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
+        List<Song> queueSongs = new ArrayList<>();
+        Playlist currentPlaylist = currentShow.getPlaylist();
+        if (currentShow.getSongQueue() != null) {
+            Queue currentQueue = currentShow.getSongQueue();
+            queueSongs = currentQueue.getSongs();
+        }
+
+        List<Song> playlistSongs = currentPlaylist.getSongsList();
+        model.addAttribute("currentArtist", currentArtist);
+        model.addAttribute("currentShow", currentShow);
+        model.addAttribute("currentPlaylist", currentPlaylist);
+        model.addAttribute("currentPlaylist", currentPlaylist);
+        model.addAttribute("queueSongs", queueSongs);
+        model.addAttribute("playlistSongs", playlistSongs);
+        return "live-show";
     }
 }
