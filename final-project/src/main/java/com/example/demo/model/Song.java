@@ -27,11 +27,11 @@ public class Song {
     public Song() {
     }
 
-    public Song(String originalArtist, String songName, String genre) {
+    public Song(String originalArtist, String songName, String genre, boolean isPlaylistVisible) {
         this.originalArtist = originalArtist;
         this.songName = songName;
         this.genre = genre;
-        this.isPlaylistVisible = true;
+        this.isPlaylistVisible = isPlaylistVisible;
     }
 
     public Boolean getPlaylistVisible() {

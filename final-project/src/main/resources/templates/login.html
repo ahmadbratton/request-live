@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
-    <link  rel="stylesheet" th:href="@{/main.css}"/>
+    <link  rel="stylesheet" th:href="@{/login.css}"/>
     <title>Login</title>
 </head>
 <body class="body">
+<div class="container" >
+    <div class="img">
+        <p>Create a new artist account</p>
+    </div>
+    <div class="login">
     <h1 class="loginName">Login</h1>
     <p th:text="${error}"></p>
     <form action="/api/artist/login" method="post">
@@ -14,5 +19,7 @@
         <input type="password" name="password" placeholder="password"/>
         <button>Submit</button>
     </form>
+    </div>
+</div>
 </body>
 </html>

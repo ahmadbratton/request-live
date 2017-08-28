@@ -181,10 +181,11 @@ public class PlaylistController {
         song.setOriginalArtist(originalArtist);
         song.setSongName(songName);
         song.setGenre(genre);
-
+        song.setPlaylistVisible(true);
         if(allSongs.size() != 0) {
             for (int i = 0; i < allSongs.size(); i++) {
                 if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
+
                     playlistSongs.add(song);
                     System.out.println("song already exist");
                 } else {
@@ -192,11 +193,13 @@ public class PlaylistController {
                 }
             }
             if (Newsong) {
+
                 songRepo.save(song);
                 playlistSongs.add(song);
             }
         }
         else{
+
             songRepo.save(song);
             playlistSongs.add(song);
         }
