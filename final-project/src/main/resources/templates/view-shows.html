@@ -57,7 +57,11 @@
                 </div>
             </div>
         </div>
-
+        <div class="start-show">
+            <form th:action="@{'/api/start-show/' + ${show.showId}}" th:method="post">
+                <button type="submit">Start Show</button>
+            </form>
+        </div>
     </div>
     <form action="/api/artist/logout" method="post">
         <button>Logout</button>
