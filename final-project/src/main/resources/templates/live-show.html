@@ -20,8 +20,8 @@
                 </tr>
                 </thead>
                 <div th:each="song: ${playlistSongs}">
-                    <tbody>
-                    <tr>
+                    <tbody th:if="${song.PlaylistVisible}" >
+                    <tr >
                         <td th:text="${song.originalArtist}" ></td>
                         <td  th:text="${song.songName}"> </td>
                         <td th:text="${song.genre}" ></td>

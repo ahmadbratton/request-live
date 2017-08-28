@@ -182,6 +182,7 @@ public class ShowController {
         model.addAttribute("currentPlaylist", currentPlaylist);
         model.addAttribute("queueSongs", queueSongs);
         model.addAttribute("playlistSongs", playlistSongs);
+
         return "live-show";
     }
 }

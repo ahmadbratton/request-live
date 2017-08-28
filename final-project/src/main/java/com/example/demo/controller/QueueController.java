@@ -39,6 +39,7 @@ public class QueueController {
         Show currentShow = showRepo.findOne(showId);
 
         Song selectedSong = songRepo.findOne(songId);
+        selectedSong.setPlaylistVisible(false);
         Queue showQueue = currentShow.getSongQueue();
         if(showQueue == null) {
             Queue newQueue = new Queue();
