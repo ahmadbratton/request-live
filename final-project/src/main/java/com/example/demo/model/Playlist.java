@@ -19,7 +19,7 @@ public class Playlist {
     private String playlistName;
 
     @Nullable
-    @OneToMany
+    @ManyToMany
     private List<Song> songsList;
 
     public Playlist() {

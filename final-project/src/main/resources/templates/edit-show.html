@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Show</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+</head>
+<body>
+    <h1>Edit Show</h1>
+    <div>
+        <h4 th:text="'Location: ' + ${show.locationName}"></h4>
+        <h4 th:text="'Address: ' + ${show.locationAddress}"></h4>
+        <form th:action="@{'/api/' + ${show.showId} + '/edit-location'}" th:method="post">
+            <button type="submit">Edit Location</button>
+        </form>
+    </div>
+    <div th:if="${editLocation} == true">
+        <form th:action="@{'/api/' + ${showId} + '/edit-show-info'}" th:method="post">
+            <label for="locationName">Location Name</label>
+            <input id="locationName" name="locationName" type="text" th:placeholder="${show.locationName}"/>
+            <label for="locationAddress">Location Address</label>
+            <input type="text" name="locationAddress" id="locationAddress" th:placeholder="${show.locationAddress}"/>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div>
+        <h4 th:text="'Current Playlist: ' + ${show.playlist.playlistName}"></h4>
+        <form th:action="@{'/api/' + ${show.showId} + '/edit-add-playlist'}" th:method="post">
+            <button type="submit">Select Different Playlist</button>
+        </form>
+    </div>
+    <div th:if="${editAddPlaylist} == true">
+        <div th:each="playlist : ${artistPlaylists}">
+            <p th:text="${playlist.playlistName}"></p>
+            <form th:action="@{'/api/' + ${show.showId} + '/' + ${playlist.playlistId} + '/edit-show'}" th:method="post">
+                <button type="submit">Select Playlist</button>
+            </form>
+            <form th:action="@{'/api/' + ${playlist.playlistId} + '/view-playlist'}" th:method="post">
+                <button type="submit">View Playlist</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

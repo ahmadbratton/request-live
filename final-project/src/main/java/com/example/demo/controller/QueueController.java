@@ -84,4 +84,15 @@ public class QueueController {
 
         return "song-queue";
     }
+
+    @DeleteMapping("/{showId}/{songId}/mark-as-played")
+    String deleteFromQueue(@PathVariable int showId, @PathVariable int songId) {
+        Song selectedSong = songRepo.findOne(songId);
+        Show show = showRepo.findOne(showId);
+        Queue queue = show.getSongQueue();
+        List<Song> songList = queue.getSongs();
+        songList.remove(selectedSong);
+        queueRepo.save(queue);
+        return "redirect:/api/start-show/" + showId ;
+    }
 }

@@ -31,12 +31,6 @@ public class PlaylistController {
     @Autowired
     ShowRepository showRepo;
 
-//    @GetMapping("/{showId}/create-playlist")
-//    public String renderCreatePlaylistForShow(@PathVariable int showId) {
-//        Show currentShow = showRepo.findOne(showId);
-//        return "create-playlist";
-//    }
-
     @GetMapping("/create-playlist")
     public String renderCreatePlaylist(Model model, HttpSession session) {
         if (session.getAttribute("artistId") == null) {
@@ -137,8 +131,11 @@ public class PlaylistController {
         if(Songs.size() != 0) {
             for (int i = 0; i < Songs.size(); i++) {
                 if (Songs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && Songs.get(i).getSongName().equals(song.getSongName())) {
-                    songList.add(song);
-                    System.out.println("song already exist");
+                    songList.add(Songs.get(i));
+                    songRepo.save(Songs.get(i));
+                    playlistRepo.save(playlist);
+                    return "redirect:/api/"+ playlistId + "/add-song";
+//
                 } else {
                     Newsong = true;
                 }
@@ -149,7 +146,7 @@ public class PlaylistController {
             }
         }
         else{
-            songRepo.save(song);
+//            songRepo.save(song);
             songList.add(song);
         }
 
@@ -157,7 +154,7 @@ public class PlaylistController {
 
             playlistRepo.save(playlist);
         } catch (Exception ex) {
-            return "songs could not be Added";
+            return "redirect:/api/"+ playlistId + "/add-song";
         }
         return "redirect:/api/"+ playlistId + "/add-song";
      }
@@ -186,8 +183,10 @@ public class PlaylistController {
             for (int i = 0; i < allSongs.size(); i++) {
                 if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
 
-                    playlistSongs.add(song);
-                    System.out.println("song already exist");
+                    playlistSongs.add(allSongs.get(i));
+                    songRepo.save(allSongs.get(i));
+                    playlistRepo.save(currentplayList);
+                    return "redirect:/api/"+ showId + "/" + playlistId + "/add-song";
                 } else {
                     Newsong = true;
                 }
@@ -235,9 +234,11 @@ public class PlaylistController {
         Playlist playlist = playlistRepo.findOne(playlistId);
         model.addAttribute("playlist",playlist);
         model.addAttribute("songs", playlist.getSongsList());
+        model.addAttribute("editPlaylist", Booleans.getEditPlaylist());
+        model.addAttribute("editPlaylistName", Booleans.getEditPlaylistName());
+        Booleans.setEditPlaylist(false);
+        Booleans.setEditPlaylistName(false);
         return "view-playlist";
-
-
     }
 
     @PostMapping("/{playlistId}/view-playlist")
@@ -249,6 +250,19 @@ public class PlaylistController {
     @PostMapping("/{playlistId}/playlist-created")
     public String Playlistsubmit(@PathVariable int playlistId){
         Playlist playlist = playlistRepo.findOne(playlistId);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
+    @PostMapping("/{playlistId}/edit-playlist")
+    public String editPlaylist(@PathVariable int playlistId) {
+        Playlist selectedPlaylist = playlistRepo.findOne(playlistId);
+        Booleans.setEditPlaylist(true);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
+    @PostMapping("/{playlistId}/edit-playlist-name")
+    public String editPlaylistName(@PathVariable int playlistId) {
+        Booleans.setEditPlaylistName(true);
         return "redirect:/api/" + playlistId + "/view-playlist";
     }
 
