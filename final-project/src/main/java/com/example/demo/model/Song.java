@@ -21,6 +21,9 @@ public class Song {
     @Column(name="genre")
     private String genre;
 
+    @Column(name="isPlaylistVisible")
+    private Boolean isPlaylistVisible;
+
     public Song() {
     }
 
@@ -28,6 +31,15 @@ public class Song {
         this.originalArtist = originalArtist;
         this.songName = songName;
         this.genre = genre;
+        this.isPlaylistVisible = true;
+    }
+
+    public Boolean getPlaylistVisible() {
+        return isPlaylistVisible;
+    }
+
+    public void setPlaylistVisible(Boolean playlistVisible) {
+        isPlaylistVisible = playlistVisible;
     }
 
     public String getOriginalArtist() {
@@ -80,6 +92,7 @@ public class Song {
                 ", originalArtist='" + originalArtist + '\'' +
                 ", songName='" + songName + '\'' +
                 ", genre='" + genre + '\'' +
+                ", isPlaylistVisible=" + isPlaylistVisible +
                 '}';
     }
 }

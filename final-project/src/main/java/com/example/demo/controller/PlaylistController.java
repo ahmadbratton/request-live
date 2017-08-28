@@ -205,7 +205,8 @@ public class PlaylistController {
 
             playlistRepo.save(currentplayList);
         } catch (Exception ex) {
-            return "songs could not be Added";
+            System.out.println();
+            return "redirect:/api/"+ showId + "/" + playlistId + "/add-song";
         }
 
 
