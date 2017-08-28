@@ -46,6 +46,7 @@ public class QueueController {
 //        newQueue.setShow(currentShow);
             List<Song> songQueue = new ArrayList<>();
             songQueue.add(selectedSong);
+
             newQueue.setSongs(songQueue);
 
             currentShow.setSongQueue(newQueue);
