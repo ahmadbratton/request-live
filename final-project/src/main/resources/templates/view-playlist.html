@@ -31,7 +31,7 @@
         </form>
     </div>
     <div th:if="${editPlaylistName} == true">
-        <form action="">
+        <form th:action="@{'/api/' + ${playlistId} + '/change-playlist-name' }" th:method="post">
             <input type="text" name="playlistName" th:placeholder="${playlist.playlistName}"/>
             <button type="submit">Submit Changes</button>
         </form>
@@ -47,15 +47,31 @@
         </thead>
         <div th:each="ps: ${songs}">
             <tbody>
-            <tr>
+            <tr th:if="${editSong} == false">
                 <td th:text="${ps.originalArtist}"></td>
                 <td th:text="${ps.songName}"></td>
                 <td th:text="${ps.genre}"></td>
                 <td th:if="${editPlaylist} == true">
-                    <form action="">
+                    <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song-flag'}" th:method="post">
                         <button type="submit">Edit Song</button>
                     </form>
                 </td>
+            </tr>
+            <tr th:if="${editSong} == true">
+                <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song'}" th:method="post">
+                    <td>
+                        <input type="text" name="originalArtist" th:value="${ps.originalArtist}"/>
+                    </td>
+                    <td>
+                        <input type="text" name="songName" th:value="${ps.songName}"/>
+                    </td>
+                    <td>
+                        <input type="text" name="genre" th:value="${ps.genre}"/>
+                    </td>
+                    <td>
+                        <button type="submit">Submit Changes</button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </div>

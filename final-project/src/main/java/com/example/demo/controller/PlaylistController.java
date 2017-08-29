@@ -236,8 +236,10 @@ public class PlaylistController {
         model.addAttribute("songs", playlist.getSongsList());
         model.addAttribute("editPlaylist", Booleans.getEditPlaylist());
         model.addAttribute("editPlaylistName", Booleans.getEditPlaylistName());
+        model.addAttribute("editSong", Booleans.getEditSong());
         Booleans.setEditPlaylist(false);
         Booleans.setEditPlaylistName(false);
+        Booleans.setEditSong(false);
         return "view-playlist";
     }
 
@@ -266,4 +268,29 @@ public class PlaylistController {
         return "redirect:/api/" + playlistId + "/view-playlist";
     }
 
+    @PostMapping("/{playlistId}/change-playlist-name")
+    public String changePlaylistName(@PathVariable int playlistId, String playlistName) {
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        playlist.setPlaylistName(playlistName);
+        playlistRepo.save(playlist);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
+    @PostMapping("/{playlistId}/{songId}/edit-song-flag")
+    public String editSongFlag(@PathVariable int playlistId, @PathVariable int songId) {
+        songRepo.findOne(songId);
+        Booleans.setEditSong(true);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
+    @PostMapping("/{playlistId}/{songId}/edit-song")
+    public String editSong(@PathVariable int playlistId, @PathVariable int songId, String originalArtist, String songName, String genre) {
+        Song selectedSong = songRepo.findOne(songId);
+        Playlist playlist = playlistRepo.findOne(playlistId);
+        selectedSong.setOriginalArtist(originalArtist);
+        selectedSong.setSongName(songName);
+        selectedSong.setGenre(genre);
+        playlistRepo.save(playlist);
+        return "redirect:/api/" + playlistId + "/view-playlist";
+    }
 }
