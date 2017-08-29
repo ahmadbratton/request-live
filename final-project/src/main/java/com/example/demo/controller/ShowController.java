@@ -156,6 +156,12 @@ public class ShowController {
         Show currentShow = showRepo.findOne(showId);
         currentShow.setStarted(true);
         System.out.println(currentShow.getStarted());
+        Playlist currentPlaylist = currentShow.getPlaylist();
+        List<Song> playlistSongs = currentPlaylist.getSongsList();
+        for (int i = 0; i < playlistSongs.size(); i++) {
+            Song currentSong = playlistSongs.get(i);
+            currentSong.setPlaylistVisible(true);
+        }
         showRepo.save(currentShow);
         return "redirect:/api/start-show/" +showId;
     }
@@ -164,6 +170,9 @@ public class ShowController {
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
 
         Show currentShow = showRepo.findOne(showId);
+//        Playlist showPlaylist = currentShow.getPlaylist();
+//        List<Song> playlistSongs = showPlaylist.getSongsList();
+
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
@@ -176,13 +185,65 @@ public class ShowController {
         }
 
         List<Song> playlistSongs = currentPlaylist.getSongsList();
+
         model.addAttribute("currentArtist", currentArtist);
         model.addAttribute("currentShow", currentShow);
         model.addAttribute("currentPlaylist", currentPlaylist);
         model.addAttribute("currentPlaylist", currentPlaylist);
         model.addAttribute("queueSongs", queueSongs);
         model.addAttribute("playlistSongs", playlistSongs);
-
         return "live-show";
+    }
+
+    @PostMapping("/{showId}/edit-show")
+    public String editShow(@PathVariable int showId) {
+        Show show = showRepo.findOne(showId);
+        return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @GetMapping("{showId}/edit-show")
+    public String renderEditShow(@PathVariable int showId, Model model, HttpSession session) {
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        List<Playlist> artistPlaylists = currentArtist.getArtistPlaylists();
+        Show show = showRepo.findOne(showId);
+        model.addAttribute("show", show);
+        model.addAttribute("artistPlaylists", artistPlaylists);
+        model.addAttribute("editLocation", Booleans.getEditLocation());
+        model.addAttribute("editAddPlaylist", Booleans.getEditAddPlaylist());
+        Booleans.setEditAddPlaylist(false);
+        Booleans.setEditLocation(false);
+        return "edit-show";
+    }
+
+    @PostMapping("/{showId}/edit-show-info")
+    public String editShowInfo(@PathVariable int showId, String locationName, String locationAddress){
+        Show currentShow = showRepo.findOne(showId);
+        currentShow.setLocationName(locationName);
+        currentShow.setLocationAddress(locationAddress);
+        showRepo.save(currentShow);
+        return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @PostMapping("/{showId}/{playlistId}/edit-show")
+    public String editAddPlaylist(@PathVariable int showId, @PathVariable int playlistId) {
+        Show currentShow = showRepo.findOne(showId);
+        Playlist selectedPlaylist = playlistRepo.findOne(playlistId);
+        currentShow.setPlaylist(selectedPlaylist);
+        showRepo.save(currentShow);
+        return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @PostMapping("/{showId}/edit-location")
+    public String editLocation(@PathVariable int showId) {
+        Show currentShow = showRepo.findOne(showId);
+        Booleans.setEditLocation(true);
+        return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @PostMapping("/{showId}/edit-add-playlist")
+    public String editAddPlaylist(@PathVariable int showId) {
+        Show currentShow = showRepo.findOne(showId);
+        Booleans.setEditAddPlaylist(true);
+        return "redirect:/api/" + showId + "/edit-show";
     }
 }

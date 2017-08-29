@@ -51,6 +51,11 @@
                         <td th:text="${song.originalArtist}" ></td>
                         <td  th:text="${song.songName}"> </td>
                         <td th:text="${song.genre}" ></td>
+                        <td>
+                            <form th:action="@{'/api/' + ${showId} + '/' + ${song.songId} + '/mark-as-played'}" th:method="delete">
+                                <button type="submit">Mark As Played</button>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </div>
