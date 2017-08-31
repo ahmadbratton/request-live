@@ -8,6 +8,8 @@
 <body>
     <h3 th:text="${show.locationName}"></h3>
     <h3 th:text="${show.locationAddress}"></h3>
+    <h3 th:text="${show.startTime}"></h3>
+    <h3 th:text="${show.endTime}"></h3>
     <h3>Select A Playlist For This Show</h3>
     <form th:action="@{'/api/' + ${showId} + '/render-create-playlist'}" th:method="post">
         <button type="submit">Create New Playlist</button>

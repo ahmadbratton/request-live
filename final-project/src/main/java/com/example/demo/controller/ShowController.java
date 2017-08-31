@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static spark.Spark.post;
@@ -46,7 +47,7 @@ public class ShowController {
 
     @PostMapping("/create-show")
     @CrossOrigin
-    public String createShow(String locationName, String locationAddress, HttpSession session) {
+    public String createShow(String locationName, String locationAddress, Date startTime, Date endTime,  HttpSession session) {
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
@@ -55,6 +56,8 @@ public class ShowController {
         newShow.setStarted(false);
         newShow.setLocationName(locationName);
         newShow.setLocationAddress(locationAddress);
+        newShow.setStartTime(startTime);
+        newShow.setEndTime(endTime);
         showList.add(newShow);
 
         try {
