@@ -24,9 +24,11 @@ public class Show {
     private String locationAddress;
 
     @Column(name="startTime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
     @Column(name="endTime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
     @ManyToOne
