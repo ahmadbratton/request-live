@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
     <link  rel="stylesheet" th:href="@{/view-shows.css}"/>
 </head>
-<body>
+<body class="view-shows-body">
+<div class="background-cover">
     <div class="navBar" >
         <nav>
             <div class="tags" >
@@ -19,7 +20,7 @@
             </div>
         </nav>
     </div>
-    <h1>shows page</h1>
+    <h1 class="view-shows-h1">shows page</h1>
     <div class="showContainer" th:each="show : ${allShows}">
         <div class="allShows" >
             <div class="showInfo" >
@@ -57,20 +58,25 @@
                     </div>
                 </div>
             </div>
+            <div class="button-container">
+                <div class="start-show">
+                    <form th:action="@{'/api/start-show/' + ${show.showId}}" th:method="post">
+                        <button type="submit">Start Show</button>
+                    </form>
+                </div>
+                <div class="edit-show">
+                    <form th:action="@{'/api/' + ${show.showId} + '/edit-show'}" th:method="post">
+                        <button type="submit">Edit Show</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="start-show">
-            <form th:action="@{'/api/start-show/' + ${show.showId}}" th:method="post">
-                <button type="submit">Start Show</button>
-            </form>
-        </div>
-        <div class="edit-show">
-            <form th:action="@{'/api/' + ${show.showId} + '/edit-show'}" th:method="post">
-                <button type="submit">Edit Show</button>
-            </form>
-        </div>
+
+
     </div>
     <form action="/api/artist/logout" method="post">
         <button>Logout</button>
     </form>
+</div>
 </body>
 </html>

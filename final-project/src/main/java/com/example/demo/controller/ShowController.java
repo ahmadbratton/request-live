@@ -5,6 +5,9 @@ import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.twilio.twiml.Body;
+import com.twilio.twiml.Message;
+import com.twilio.twiml.MessagingResponse;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static spark.Spark.post;
 
 /**
  * Created by duhlig on 8/17/17.
@@ -165,6 +170,15 @@ public class ShowController {
             Song currentSong = playlistSongs.get(i);
             currentSong.setPlaylistVisible(true);
         }
+        post("/receive-sms", (req, res) -> {
+            Message sms = new Message.Builder()
+                    .body(new Body("http://localhost:8080/api/user/" + showId + "/artist-playlist" ))
+                    .build();
+            MessagingResponse twiml = new MessagingResponse.Builder()
+                    .message(sms)
+                    .build();
+            return twiml.toXml();
+        });
         showRepo.save(currentShow);
         return "redirect:/api/start-show/" +showId;
     }

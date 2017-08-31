@@ -32,7 +32,7 @@
     </div>
     <div th:if="${editPlaylistName} == true">
         <form th:action="@{'/api/' + ${playlistId} + '/change-playlist-name' }" th:method="post">
-            <input type="text" name="playlistName" th:placeholder="${playlist.playlistName}"/>
+            <input type="text" name="playlistName" th:value="${playlist.playlistName}"/>
             <button type="submit">Submit Changes</button>
         </form>
     </div>
