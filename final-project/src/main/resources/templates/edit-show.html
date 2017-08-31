@@ -17,9 +17,9 @@
     <div th:if="${editLocation} == true">
         <form th:action="@{'/api/' + ${showId} + '/edit-show-info'}" th:method="post">
             <label for="locationName">Location Name</label>
-            <input id="locationName" name="locationName" type="text" th:placeholder="${show.locationName}"/>
+            <input id="locationName" name="locationName" type="text" th:value="${show.locationName}"/>
             <label for="locationAddress">Location Address</label>
-            <input type="text" name="locationAddress" id="locationAddress" th:placeholder="${show.locationAddress}"/>
+            <input type="text" name="locationAddress" id="locationAddress" th:value="${show.locationAddress}"/>
             <button type="submit">Submit</button>
         </form>
     </div>
