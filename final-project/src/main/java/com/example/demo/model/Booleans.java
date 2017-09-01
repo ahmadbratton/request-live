@@ -11,11 +11,12 @@ public class Booleans {
     private static Boolean editPlaylist = false;
     private static Boolean editPlaylistName = false;
     private static Boolean editSong = false;
+    private static Boolean selectPlaylist = false;
 
     public Booleans() {
     }
 
-    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong) {
+    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong, Boolean selectPlaylist) {
         this.renderPlaylistCreator = renderPlaylistCreator;
         this.renderSongCreator = renderSongCreator;
         this.editLocation = editLocation;
@@ -23,6 +24,15 @@ public class Booleans {
         this.editPlaylist = editPlaylist;
         this.editPlaylistName = editPlaylistName;
         this.editSong = editSong;
+        this.selectPlaylist = selectPlaylist;
+    }
+
+    public static Boolean getSelectPlaylist() {
+        return selectPlaylist;
+    }
+
+    public static void setSelectPlaylist(Boolean selectPlaylist) {
+        Booleans.selectPlaylist = selectPlaylist;
     }
 
     public static Boolean getEditSong() {
@@ -91,6 +101,7 @@ public class Booleans {
                 "editPlaylist=" + editPlaylist +
                 "editPlaylistName=" + editPlaylistName +
                 "editSong=" + editSong +
+                "selectPlaylist=" + selectPlaylist +
                 '}';
     }
 }

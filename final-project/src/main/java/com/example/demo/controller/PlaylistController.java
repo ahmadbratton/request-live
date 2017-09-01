@@ -146,7 +146,7 @@ public class PlaylistController {
             }
         }
         else{
-//            songRepo.save(song);
+            songRepo.save(song);
             songList.add(song);
         }
 
@@ -154,6 +154,7 @@ public class PlaylistController {
 
             playlistRepo.save(playlist);
         } catch (Exception ex) {
+            System.out.println("catch");
             return "redirect:/api/"+ playlistId + "/add-song";
         }
         return "redirect:/api/"+ playlistId + "/add-song";
@@ -292,5 +293,12 @@ public class PlaylistController {
         selectedSong.setGenre(genre);
         playlistRepo.save(playlist);
         return "redirect:/api/" + playlistId + "/view-playlist";
+    }
+
+    @PostMapping("/{showId}/select-playlist-boolean")
+    public String selectPlaylistBoolean(@PathVariable int showId) {
+        Booleans.setSelectPlaylist(true);
+        System.out.println(Booleans.getSelectPlaylist());
+        return "redirect:/api/" + showId + "/add-playlist";
     }
 }
