@@ -73,6 +73,7 @@ public class ArtistController {
 
         }
 
+
         return "No email/password combination exsist";
     }
 
