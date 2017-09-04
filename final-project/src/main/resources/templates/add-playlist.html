@@ -3,17 +3,36 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/add-playlist.css}"/>
     <title>Title</title>
 </head>
 <body>
-    <h3 th:text="${show.locationName}"></h3>
-    <h3 th:text="${show.locationAddress}"></h3>
-    <h3 th:text="${show.startTime}"></h3>
-    <h3 th:text="${show.endTime}"></h3>
-    <h3>Select A Playlist For This Show</h3>
-    <form th:action="@{'/api/' + ${showId} + '/render-create-playlist'}" th:method="post">
-        <button type="submit">Create New Playlist</button>
-    </form>
+    <div class="show-info">
+        <h3 th:text="${show.locationName}"></h3>
+        <h3 th:text="${show.locationAddress}"></h3>
+        <h3 th:text="${show.startTime}"></h3>
+        <h3 th:text="${show.endTime}"></h3>
+    </div>
+    <div class="button-container" >
+        <div class="buttons">
+            <form th:action="@{'/api/' + ${showId} + '/select-playlist-boolean'}" th:method="post">
+                <button type="submit">Select A Playlist For This Show <i class="material-icons">keyboard_arrow_down</i></button>
+            </form>
+            <div th:if="${selectPlaylist} == true">
+                <div th:each="playlist : ${allPlaylists}">
+                    <!--<p th:text="${playlist.playlistName}"></p>-->
+                    <form class="playlist-forms" th:action="@{'/api/' + ${showId} + '/' + ${playlist.playlistId} + '/add-playlist'}" th:method="post">
+                        <button type="submit" th:text="${playlist.playlistName}"></button>
+                    </form>
+                </div>
+            </div>
+            <form th:action="@{'/api/' + ${showId} + '/render-create-playlist'}" th:method="post">
+                <button type="submit">Create New Playlist</button>
+            </form>
+        </div>
+    </div>
+
     <div th:if="${renderPlaylistCreator} == true">
         <div th:if="${nameOfPlaylist} == null">
             <form th:action="@{'/api/' + ${showId} + '/create-playlist'}" th:method="post">
@@ -41,11 +60,7 @@
             </form>
         </div>
     </div>
-    <div th:each="playlist : ${allPlaylists}">
-        <p th:text="${playlist.playlistName}"></p>
-        <form th:action="@{'/api/' + ${showId} + '/' + ${playlist.playlistId} + '/add-playlist'}" th:method="post">
-            <button type="submit">Add Playlist To Show</button>
-        </form>
-    </div>
+
+
 </body>
 </html>

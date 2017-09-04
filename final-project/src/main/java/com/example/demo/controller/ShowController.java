@@ -101,7 +101,9 @@ public class ShowController {
         model.addAttribute("allPlaylists", allPlaylists);
         model.addAttribute("show", show);
         model.addAttribute("renderPlaylistCreator", Booleans.getRenderPlaylistCreator());
+        model.addAttribute("selectPlaylist", Booleans.getSelectPlaylist());
         Booleans.setRenderPlaylistCreator(false);
+        Booleans.setSelectPlaylist(false);
         return "add-playlist";
     }
 
