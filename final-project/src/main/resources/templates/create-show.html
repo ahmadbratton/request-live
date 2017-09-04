@@ -1,19 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/create-show.css}"/>
     <title>Title</title>
 </head>
 <body>
-    <h1>Create A New Show</h1>
-    <form action="/api/create-show" method="post">
-        <input type="text" name="locationName" placeholder="Location Name"/>
-        <input type="text" name="locationAddress" placeholder="Location Address"/>
-        <input type="text" name="date" placeholder="dd/MM/yyyy"/>
-        <input type="text" name="startTime" placeholder="hh:mm:ss"/>
-        <input type="text" name="endTime" placeholder="hh:mm:ss"/>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="navBar" >
+        <nav>
+            <div class="tags" >
+                <div class="showCreateTag">
+                    <a href="create-show" > Create a new Show  </a>
+                </div>
+                <div class="playlistCreateTag">
+                    <a href="create-playlist" > Create a new Playlist  </a>
+                </div>
+                <div class="view-shows">
+                    <a href="view-shows">View Shows</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>Create A New Show</h1>
+        <div class="form-container">
+            <form class="form" action="/api/create-show" method="post">
+                <input class="glylphicon glyphicon-home" type="text" name="locationName" placeholder="Location Name"/>
+                <input class="glylphicon glyphicon-home" type="text" name="locationAddress" placeholder="Location Address"/>
+                <input type="text" name="startTime" placeholder="dd/MM/yyyy hh:mm:ss"/>
+                <input type="text" name="endTime" placeholder="dd/MM/yyyy hh:mm:ss"/>
+                <button class="btn btn-outline-dark" type="submit">Submit</button>
+            </form>
+        </div>
+
+    </div>
 </body>
 </html>

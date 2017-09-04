@@ -1,0 +1,63 @@
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    background: url("./img/login-pic-2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    height: 70%;
+}
+
+.show-info {
+    text-align: center;
+    border-bottom: 3px solid black;
+    color: white;
+    background-color: rgba(0,0,0,.5);
+}
+
+.buttons {
+    background-color: rgba(0,0,0,.7);
+    margin-top: 10%;
+
+    height: auto;
+    height: 50%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+
+
+.buttons form {
+    margin: 5%;
+    margin-bottom: 0px;
+}
+
+.buttons button {
+    width: 300px;
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.playlist-forms {
+    margin: 0px;
+}
+
+
