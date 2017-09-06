@@ -68,7 +68,7 @@ public class QueueController {
         } catch (Exception ex) {
             return "problem adding song to queue";
         }
-        return "redirect:/api/ " + showId +"/view-queue";
+        return "redirect:/api/" + showId +"/view-queue";
     }
 
     @GetMapping("/{showId}/view-queue")
@@ -76,11 +76,9 @@ public class QueueController {
         Show currentShow = showRepo.findOne(showId);
         Queue currentQueue = currentShow.getSongQueue();
         List<Song> songList = currentQueue.getSongs();
-
+        model.addAttribute("showLocation", currentShow.getLocationName());
+        model.addAttribute("showAddress", currentShow.getLocationAddress());
         model.addAttribute("songs", songList);
-
-
-
 
         return "song-queue";
     }

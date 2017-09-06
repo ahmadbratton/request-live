@@ -11,12 +11,21 @@
     <div class="navBar" >
         <nav>
             <div class="tags" >
-                <div class="showCreateTag">
-                    <a href="create-show" > Create a new Show  </a>
+                <div class="tagNames">
+                    <div class="showCreateTag">
+                        <a href="create-show" > Create a new Show  </a>
+                    </div>
+                    <div class="playlistCreateTag">
+                        <a href="create-playlist" > Create a new Playlist  </a>
+                    </div>
                 </div>
-                <div class="playlistCreateTag">
-                    <a href="create-playlist" > Create a new Playlist  </a>
+
+                <div>
+                    <form action="/api/artist/logout" method="post">
+                        <button class="logout">Logout</button>
+                    </form>
                 </div>
+
             </div>
         </nav>
     </div>
@@ -73,9 +82,7 @@
 
 
     </div>
-    <form action="/api/artist/logout" method="post">
-        <button>Logout</button>
-    </form>
+
 </div>
 </body>
 </html>

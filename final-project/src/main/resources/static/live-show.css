@@ -4,10 +4,12 @@ html {
 }
 
 body {
-    background: url("./img/drums.jpg");
-        background-size: cover;
-        background-position: center;
-        color: white;
+    background: url("./img/guitar-amp_720.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .table-container {
@@ -17,4 +19,37 @@ body {
 
 .venue {
     text-align: center;
+}
+
+.playlist-container {
+    background-color: rgba(0,0,0,.7);
+    border-radius: 10px;
+    width: 45%;
+}
+
+.queue-container {
+    background-color: rgba(0,0,0,.7);
+    border-radius: 10px;
+    width: 45%;
+}
+
+h2 {
+    text-align: center;
+    margin: 2%;
+}
+
+.no-songs {
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    background-color: rgba(0,0,0,.7);
+    padding: 2%;
+    margin-bottom: 3%;
+}
+
+.mark-as-played {
+    border-color: white;
+    color: white;
 }

@@ -1,0 +1,39 @@
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    background: url("./img/guitar-amp_720.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#song-table {
+    background-color: rgba(0,0,0,.7);
+}
+
+.show-info {
+    background-color: rgba(0,0,0,.7);
+    padding: 3%;
+    text-align: center;
+}
+
+#artist {
+    border-color: white;
+}
+
+#song {
+    border-color: white;
+}
+
+#genre {
+    border-color: white;
+}
+
+#add-song {
+    border-color: white;
+}
