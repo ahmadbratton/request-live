@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.Artist;
 import com.example.demo.model.Playlist;
 import com.example.demo.model.Show;
 import com.example.demo.model.Song;
@@ -37,9 +38,10 @@ public class UserController {
         Show showAttending = showRepo.findOne(showId);
         Playlist showPlaylist = showAttending.getPlaylist();
         List<Song> showSongs = showPlaylist.getSongsList();
-
         model.addAttribute("showSongs", showSongs);
         model.addAttribute("show",showAttending);
+        model.addAttribute("showLocation", showAttending.getLocationName());
+        model.addAttribute("showAddress", showAttending.getLocationAddress());
 
         return "user-view-show";
 
