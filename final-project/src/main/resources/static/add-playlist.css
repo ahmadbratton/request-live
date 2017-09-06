@@ -30,7 +30,7 @@ body {
     margin-top: 10%;
 
     height: auto;
-    height: 50%;
+    height: 70%;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -40,15 +40,25 @@ body {
     overflow: scroll;
 }
 
+.add-playlist-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.buttons-form {
+    width: 70%;
+}
 
-.buttons form {
-    margin: 5%;
-    margin-bottom: 0px;
+.playlist-list {
+    width: 70%;
+    overflow: scroll;
 }
 
 .buttons button {
-    width: 300px;
+    width: 100%;
     border: 1px solid white;
     background-color: rgba(0,0,0,.5);
     color: white;
@@ -57,7 +67,79 @@ body {
 }
 
 .playlist-forms {
-    margin: 0px;
+    margin: 0%;
+    width: 100%;
+}
+
+#create-playlist-btn {
+    margin: 5%;
+    margin-left: 0%;
+}
+
+.playlist-creator {
+    width: 70%;
+    overflow: scroll;
+}
+
+#playlist-name-input{
+    width: 100%;
+    margin: 5%;
+    margin-left: 0%;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+#playlist-name-submit {
+    margin: 5%;
+    margin-left: 0%;
+}
+
+form input::-webkit-input-placeholder {
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+}
+
+form input {
+    overflow: visible;
+    margin: 5%;
+    margin-left: 0%;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.playlistName-title {
+    color: white;
+    text-align: center;
+}
+
+.add-songs-title {
+    color: white;
+    margin-top: 8%;
+    margin-bottom: none;
+}
+
+span {
+    color: white;
+}
+
+.current-songs-title {
+    color: white;
+    text-decoration: underline;
+    margin-top: 5%;
+}
+
+#create-playlist-button {
+    margin-top: 5%;
+    margin-bottom: 3%;
 }
 
 

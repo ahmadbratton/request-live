@@ -227,6 +227,8 @@ public class PlaylistController {
     @PostMapping("/{showId}/submit-playlist")
     public String submitPlaylist(@PathVariable int showId) {
         Show show = showRepo.findOne(showId);
+        Booleans.setRenderPlaylistCreator(false);
+        Booleans.setSelectPlaylist(true);
         return "redirect:/api/" + showId + "/add-playlist";
     }
 
