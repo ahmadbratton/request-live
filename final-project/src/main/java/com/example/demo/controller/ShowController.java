@@ -54,19 +54,54 @@ public class ShowController {
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
-        String startingtime = date + startTime;
-        String endingtime = date + endTime;
+
+        String startingtime = date + " " + startTime;
+        String endingtime = date + " " + endTime;
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         Date showStart = new Date();
         Date showEnd = new Date();
-        try{
-             showStart = formatter.parse(startingtime);
-            formatter.format(showStart);
-            showEnd = formatter.parse(endingtime);
-            formatter.format(endingtime);
-        }catch (Exception ex){
-
+        String formatedDate="";
+        String endFormatedDate="";
+        if(startingtime.length() >= 19) {
+            String datehalf = startingtime.substring(0, 16);
+            String AmOrPm = startingtime.substring(17, startingtime.length());
+            formatedDate = datehalf + ":00" + " " + AmOrPm;
+            System.out.println("formated correctlly date " + formatedDate);
         }
+        else{
+            String datehalf = startingtime.substring(0, 15);
+            String AmOrPm = startingtime.substring(16, startingtime.length());
+             formatedDate = datehalf + ":00" + " " + AmOrPm;
+            System.out.println("formated correctlly date " + formatedDate);
+        }
+
+        if (endingtime.length() >= 19) {
+            String enddatehalf = endingtime.substring(0, 16);
+            String endAmOrPm = endingtime.substring(17, endingtime.length());
+             endFormatedDate = enddatehalf + ":00" + " " + endAmOrPm;
+        }
+        else {
+            String enddatehalf = endingtime.substring(0, 15);
+            String endAmOrPm = endingtime.substring(16, endingtime.length());
+             endFormatedDate = enddatehalf + ":00" + " " + endAmOrPm;
+        }
+        System.out.println("formated correctlly start date " + formatedDate);
+
+        System.out.println("formated correctlly end date " + endFormatedDate);
+//
+        System.out.println(startingtime);
+
+        try{
+             showStart = formatter.parse(formatedDate);
+
+            showEnd = formatter.parse(endFormatedDate);
+
+        }catch (Exception ex){
+            System.out.println("could not format correctly");
+        }
+
+
+
         System.out.println("show start time" + showStart);
 
         System.out.println("show end time" + showEnd);
@@ -118,13 +153,32 @@ public class ShowController {
 //            allPlaylists.add(currentPlaylist);
 //        }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+
         List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
 
-        String startString = formatter.format(show.getStartTime());
 
-        model.addAttribute("startTime", formatter.format(show.getStartTime()));
-        model.addAttribute("endTime", formatter.format(show.getEndTime()));
+
+        String startString = formatter.format(show.getStartTime());
+        String endString = formatter.format(show.getEndTime());
+        System.out.println("get startdate "+ startString);
+        System.out.println("get enddate "+ endString);
+
+
+//        if (startString.charAt(11) == '0' ){
+//           String stringZero = startString.substring(11,12);
+//
+//           startString = startString.replace(stringZero , "");
+//        }
+//        if (endString.charAt(11) == '0' ){
+//            String stringZero = endString.substring(11,12);
+//
+//            endString = endString.replace(stringZero , "");
+//        }
+
+
+        model.addAttribute("startTime", startString);
+        model.addAttribute("endTime", endString);
         model.addAttribute("allPlaylists", allPlaylists);
         model.addAttribute("show", show);
         model.addAttribute("renderPlaylistCreator", Booleans.getRenderPlaylistCreator());
