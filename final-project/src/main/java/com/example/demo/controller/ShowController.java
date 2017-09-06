@@ -117,7 +117,14 @@ public class ShowController {
 //        for(Playlist currentPlaylist : playlists) {
 //            allPlaylists.add(currentPlaylist);
 //        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
+
+        String startString = formatter.format(show.getStartTime());
+
+        model.addAttribute("startTime", formatter.format(show.getStartTime()));
+        model.addAttribute("endTime", formatter.format(show.getEndTime()));
         model.addAttribute("allPlaylists", allPlaylists);
         model.addAttribute("show", show);
         model.addAttribute("renderPlaylistCreator", Booleans.getRenderPlaylistCreator());
