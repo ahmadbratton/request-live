@@ -16,6 +16,7 @@
                     <a class="links" href="#">Login</a>
                     <a class="links" href="/api/artist/register">Register</a>
                 </div>
+                <p class="error" th:if="${loginError} == true" th:text="${errorMessage}"></p>
                 <input type="text" name="email" placeholder="email"/>
                 <input type="password" name="password" placeholder="password"/>
                 <button  class="btn btn-outline-dark">Login</button>

@@ -126,3 +126,7 @@ login-body {
     color: white;
 }
 
+.error {
+    color: rgb(250, 106, 95);
+}
+
