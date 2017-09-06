@@ -9,14 +9,14 @@
 <body>
     <h1 class="venue" th:text="${currentShow.locationName}"></h1>
     <div class="table-container">
-        <div>
+        <div class="playlist-container">
             <h2>Playlist</h2>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>original Artist</th>
-                    <th> song name</th>
-                    <th> genre </th>
+                    <th>Original Artist</th>
+                    <th> Song Name</th>
+                    <th> Genre </th>
                 </tr>
                 </thead>
                 <div th:each="song: ${playlistSongs}">
@@ -31,18 +31,19 @@
             </table>
         </div>
 
-        <div th:if="${currentShow.songQueue} == null">
+        <div class="queue-container" th:if="${currentShow.songQueue} == null">
             <h2>Song Queue</h2>
-            <p>There Are Currently No Songs In The Queue</p>
+            <p class="no-songs">There Are Currently No Songs In The Queue</p>
         </div>
-        <div class="queue-table" th:if="${currentShow.songQueue} != null">
+        <div class="queue-table queue-container" th:if="${currentShow.songQueue} != null">
             <h2>Song Queue</h2>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>original Artist</th>
-                    <th> song name</th>
-                    <th> genre </th>
+                    <th>Original Artist</th>
+                    <th> Song Name</th>
+                    <th> Genre </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <div th:each="song: ${queueSongs}" >
@@ -53,7 +54,7 @@
                         <td th:text="${song.genre}" ></td>
                         <td>
                             <form th:action="@{'/api/' + ${showId} + '/' + ${song.songId} + '/mark-as-played'}" th:method="delete">
-                                <button type="submit">Mark As Played</button>
+                                <button class="mark-as-played btn btn-outline-dark" type="submit">Mark As Played</button>
                             </form>
                         </td>
                     </tr>
