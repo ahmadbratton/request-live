@@ -85,3 +85,7 @@ h1 {
     border: 1px solid white;
     color: white;
 }
+
+.form button:hover {
+    color: white;
+}
