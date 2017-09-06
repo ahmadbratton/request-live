@@ -8,80 +8,86 @@
     <link rel="stylesheet" th:href="@{/view-OnePlaylist.css}"/>
 </head>
 <body>
-    <div class="navBar">
-        <nav>
-            <div class="tags">
-                <div class="showCreateTag">
-                    <a th:href="@{/api/create-show}"> Create a new Show </a>
+    <div class="body-container">
+        <div class="navBar">
+            <nav>
+                <div class="tags">
+                    <div class="showCreateTag">
+                        <a th:href="@{/api/create-show}"> Create a new Show </a>
+                    </div>
+                    <div class="playlistCreateTag">
+                        <a th:href="@{/api/create-playlist}"> Create a new Playlist </a>
+                    </div>
+                    <div>
+                        <a th:href="@{/api/view-shows}"> View Shows </a>
+                    </div>
                 </div>
-                <div class="playlistCreateTag">
-                    <a th:href="@{/api/create-playlist}"> Create a new Playlist </a>
-                </div>
-                <div>
-                    <a th:href="@{/api/view-shows}"> view Shows </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <h1 th:if="${editPlaylistName} == false" th:text="${playlist.playlistName}"></h1>
-    <div th:if="${editPlaylist} == true and ${editPlaylistName} == false">
-        <form th:action="@{'/api/' + ${playlistId} + '/edit-playlist-name'}" th:method="post">
-            <!--<input type="text" name="playlistName" th:placeholder="${playlist.playlistName}"/>-->
-            <button type="submit">Edit Playlist Name</button>
-        </form>
-    </div>
-    <div th:if="${editPlaylistName} == true">
-        <form th:action="@{'/api/' + ${playlistId} + '/change-playlist-name' }" th:method="post">
-            <input type="text" name="playlistName" th:value="${playlist.playlistName}"/>
-            <button type="submit">Submit Changes</button>
-        </form>
-    </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>original Artist</th>
-            <th> song name</th>
-            <th> genre</th>
-        </tr>
-        </thead>
-        <div th:each="ps: ${songs}">
-            <tbody>
-            <tr th:if="${editSong} == false">
-                <td th:text="${ps.originalArtist}"></td>
-                <td th:text="${ps.songName}"></td>
-                <td th:text="${ps.genre}"></td>
-                <td th:if="${editPlaylist} == true">
-                    <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song-flag'}" th:method="post">
-                        <button type="submit">Edit Song</button>
-                    </form>
-                </td>
-            </tr>
-            <tr th:if="${editSong} == true">
-                <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song'}" th:method="post">
-                    <td>
-                        <input type="text" name="originalArtist" th:value="${ps.originalArtist}"/>
-                    </td>
-                    <td>
-                        <input type="text" name="songName" th:value="${ps.songName}"/>
-                    </td>
-                    <td>
-                        <input type="text" name="genre" th:value="${ps.genre}"/>
-                    </td>
-                    <td>
-                        <button type="submit">Submit Changes</button>
-                    </td>
-                </form>
-            </tr>
-            </tbody>
+            </nav>
         </div>
-    </table>
-    <!--<p th:text="${ps.originalArtist}"></p>-->
-    <!--<p th:text="${ps.songName}" > </p>-->
-    <!--<p th:text="${ps.genre}" > </p>-->
-    <div>
-        <form th:action="@{'/api/' + ${playlistId} + '/edit-playlist'}" th:method="post">
-            <button type="submit">Edit Playlist</button>
-        </form>
+        <div class="playlist-name-container">
+            <h1 th:if="${editPlaylistName} == false" th:text="${playlist.playlistName}"></h1>
+            <div th:if="${editPlaylist} == true and ${editPlaylistName} == false">
+                <form th:action="@{'/api/' + ${playlistId} + '/edit-playlist-name'}" th:method="post">
+                    <!--<input type="text" name="playlistName" th:placeholder="${playlist.playlistName}"/>-->
+                    <button id="playlist-name-btn" type="submit">Edit Playlist Name</button>
+                </form>
+            </div>
+        </div>
+        <div class="edit-name-submit" th:if="${editPlaylistName} == true">
+            <form class="playlist-name-form" th:action="@{'/api/' + ${playlistId} + '/change-playlist-name' }" th:method="post">
+                <input type="text" name="playlistName" th:value="${playlist.playlistName}"/>
+                <button type="submit">Submit Changes</button>
+            </form>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Original Artist</th>
+                <th> Song Name</th>
+                <th> Genre</th>
+                <th th:if="${editPlaylist} == true"></th>
+            </tr>
+            </thead>
+            <div th:each="ps: ${songs}">
+                <tbody>
+                <tr th:if="${editSong} == false">
+                    <td th:text="${ps.originalArtist}"></td>
+                    <td th:text="${ps.songName}"></td>
+                    <td th:text="${ps.genre}"></td>
+                    <td th:if="${editPlaylist} == true">
+                        <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song-flag'}" th:method="post">
+                            <button class="submit-button" type="submit">Edit Song</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${editSong} == true">
+                    <form th:action="@{'/api/' + ${playlistId} + '/' + ${ps.songId} + '/edit-song'}" th:method="post">
+                        <td>
+                            <input type="text" name="originalArtist" th:value="${ps.originalArtist}"/>
+                        </td>
+                        <td>
+                            <input type="text" name="songName" th:value="${ps.songName}"/>
+                        </td>
+                        <td>
+                            <input type="text" name="genre" th:value="${ps.genre}"/>
+                        </td>
+                        <td>
+                            <button class="submit-button" type="submit">Submit Changes</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+        <!--<p th:text="${ps.originalArtist}"></p>-->
+        <!--<p th:text="${ps.songName}" > </p>-->
+        <!--<p th:text="${ps.genre}" > </p>-->
+        <div>
+            <form th:action="@{'/api/' + ${playlistId} + '/edit-playlist'}" th:method="post">
+                <button class="submit-button" type="submit">Edit Playlist</button>
+            </form>
+        </div>
     </div>
+
 </body>
 </html>
