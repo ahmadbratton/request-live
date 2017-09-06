@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,17 +49,35 @@ public class ShowController {
 
     @PostMapping("/create-show")
     @CrossOrigin
-    public String createShow(String locationName, String locationAddress, Date startTime, Date endTime,  HttpSession session) {
+    public String createShow(String locationName, String locationAddress, String startTime, String endTime, String date,  HttpSession session) {
+
         Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
+        String startingtime = date + startTime;
+        String endingtime = date + endTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        Date showStart = new Date();
+        Date showEnd = new Date();
+        try{
+             showStart = formatter.parse(startingtime);
+            formatter.format(showStart);
+            showEnd = formatter.parse(endingtime);
+            formatter.format(endingtime);
+        }catch (Exception ex){
+
+        }
+        System.out.println("show start time" + showStart);
+
+        System.out.println("show end time" + showEnd);
+
         Show newShow = new Show();
         List<Show> showList = createdBy.getShows();
         newShow.setStarted(false);
         newShow.setLocationName(locationName);
         newShow.setLocationAddress(locationAddress);
-        newShow.setStartTime(startTime);
-        newShow.setEndTime(endTime);
+        newShow.setStartTime(showStart);
+        newShow.setEndTime(showEnd);
         showList.add(newShow);
 
         try {
@@ -97,7 +117,14 @@ public class ShowController {
 //        for(Playlist currentPlaylist : playlists) {
 //            allPlaylists.add(currentPlaylist);
 //        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
+
+        String startString = formatter.format(show.getStartTime());
+
+        model.addAttribute("startTime", formatter.format(show.getStartTime()));
+        model.addAttribute("endTime", formatter.format(show.getEndTime()));
         model.addAttribute("allPlaylists", allPlaylists);
         model.addAttribute("show", show);
         model.addAttribute("renderPlaylistCreator", Booleans.getRenderPlaylistCreator());
