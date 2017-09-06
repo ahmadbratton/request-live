@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.model.Artist;
-import com.example.demo.model.Playlist;
-import com.example.demo.model.Show;
-import com.example.demo.model.Song;
+import com.example.demo.model.*;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.SongRepository;
@@ -72,13 +69,17 @@ public class ArtistController {
             return "redirect:/api/view-shows";
 
         }
+        Booleans.setLoginError(true);
 
-
-        return "No email/password combination exsist";
+        return "redirect:/api/artist/login";
     }
 
     @GetMapping("/login")
-    public String renderLogin() {
+    public String renderLogin(Model model) {
+        String errorMessage = "email/password combination does not exist";
+        model.addAttribute("loginError", Booleans.getLoginError());
+        model.addAttribute("errorMessage", errorMessage);
+        Booleans.setLoginError(false);
         return "login";
     }
 

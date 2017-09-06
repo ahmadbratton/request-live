@@ -12,11 +12,12 @@ public class Booleans {
     private static Boolean editPlaylistName = false;
     private static Boolean editSong = false;
     private static Boolean selectPlaylist = false;
+    private static Boolean loginError = false;
 
     public Booleans() {
     }
 
-    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong, Boolean selectPlaylist) {
+    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong, Boolean selectPlaylist, Boolean loginError) {
         this.renderPlaylistCreator = renderPlaylistCreator;
         this.renderSongCreator = renderSongCreator;
         this.editLocation = editLocation;
@@ -25,6 +26,15 @@ public class Booleans {
         this.editPlaylistName = editPlaylistName;
         this.editSong = editSong;
         this.selectPlaylist = selectPlaylist;
+        this.loginError = loginError;
+    }
+
+    public static Boolean getLoginError() {
+        return loginError;
+    }
+
+    public static void setLoginError(Boolean loginError) {
+        Booleans.loginError = loginError;
     }
 
     public static Boolean getSelectPlaylist() {
