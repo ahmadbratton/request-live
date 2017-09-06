@@ -1,3 +1,15 @@
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    background: url("./img/drums.jpg");
+        background-size: cover;
+        background-position: center;
+        color: white;
+}
+
 .table-container {
     display: flex;
     justify-content: space-around;

@@ -180,3 +180,19 @@ display: flex;
         margin-top: 2%;
 }
 
+.start-show-btn {
+        border: 1px solid white;
+        background-color: rgba(0,0,0,.5);
+        color: white;
+        border-radius: 5px;
+        padding: 15%;
+}
+
+.edit-show-btn {
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 15%;
+}
+

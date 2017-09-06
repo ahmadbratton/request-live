@@ -60,12 +60,12 @@
             <div class="button-container">
                 <div class="start-show">
                     <form th:action="@{'/api/start-show/' + ${show.showId}}" th:method="post">
-                        <button type="submit">Start Show</button>
+                        <button class="btn btn-outline-dark start-show-btn" type="submit">Start Show</button>
                     </form>
                 </div>
                 <div class="edit-show">
                     <form th:action="@{'/api/' + ${show.showId} + '/edit-show'}" th:method="post">
-                        <button type="submit">Edit Show</button>
+                        <button class="btn btn-outline-dark edit-show-btn" type="submit">Edit Show</button>
                     </form>
                 </div>
             </div>
