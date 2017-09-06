@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.*;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
+import com.example.demo.repository.QueueRepository;
 import com.example.demo.repository.ShowRepository;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.twilio.twiml.Body;
@@ -37,6 +38,9 @@ public class ShowController {
 
     @Autowired
     PlaylistRepository playlistRepo;
+
+    @Autowired
+    QueueRepository queueRepo;
 
 
     @GetMapping("/create-show")
@@ -273,6 +277,7 @@ public class ShowController {
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
 
+
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
@@ -286,12 +291,15 @@ public class ShowController {
 
         List<Song> playlistSongs = currentPlaylist.getSongsList();
 
+        int playlistSize = playlistSongs.size();
+
         model.addAttribute("currentArtist", currentArtist);
         model.addAttribute("currentShow", currentShow);
         model.addAttribute("currentPlaylist", currentPlaylist);
         model.addAttribute("currentPlaylist", currentPlaylist);
         model.addAttribute("queueSongs", queueSongs);
         model.addAttribute("playlistSongs", playlistSongs);
+        model.addAttribute("listSize", playlistSize);
         return "live-show";
     }
 
@@ -345,5 +353,23 @@ public class ShowController {
         Show currentShow = showRepo.findOne(showId);
         Booleans.setEditAddPlaylist(true);
         return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @PostMapping("/{showId}/end-show")
+    public String endShow(@PathVariable int showId) {
+        Show currentShow = showRepo.findOne(showId);
+        currentShow.setStarted(false);
+        System.out.println(currentShow.getStarted());
+        Queue showQueue = currentShow.getSongQueue();
+        int queueId = showQueue.getQueueId();
+        List<Song> songsQueue = showQueue.getSongs();
+        System.out.println(songsQueue.size());
+//
+        songsQueue.clear();
+
+//
+        showRepo.save(currentShow);
+
+        return "redirect:/api/view-shows";
     }
 }
