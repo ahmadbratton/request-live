@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import org.hibernate.annotations.Cascade;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,10 +26,12 @@ public class Show {
 
     @Column(name="startTime")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a")
     private Date startTime;
 
     @Column(name="endTime")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a")
     private Date endTime;
 
     @ManyToOne
