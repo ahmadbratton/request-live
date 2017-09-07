@@ -79,6 +79,7 @@ public class QueueController {
         model.addAttribute("showLocation", currentShow.getLocationName());
         model.addAttribute("showAddress", currentShow.getLocationAddress());
         model.addAttribute("songs", songList);
+        model.addAttribute("listing", songList);
 
         return "song-queue";
     }
