@@ -293,6 +293,15 @@ public class ShowController {
 
         int playlistSize = playlistSongs.size();
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+
+        String startString = formatter.format(currentShow.getStartTime());
+        String endString = formatter.format(currentShow.getEndTime());
+
+        String date = startString.substring(0, 10);
+        String startTime = startString.substring(11, startString.length());
+        String endTime = endString.substring(11, endString.length());
+
         model.addAttribute("currentArtist", currentArtist);
         model.addAttribute("currentShow", currentShow);
         model.addAttribute("currentPlaylist", currentPlaylist);
@@ -300,6 +309,9 @@ public class ShowController {
         model.addAttribute("queueSongs", queueSongs);
         model.addAttribute("playlistSongs", playlistSongs);
         model.addAttribute("listSize", playlistSize);
+        model.addAttribute("date", date);
+        model.addAttribute("startTime", startTime);
+        model.addAttribute("endTime", endTime);
         return "live-show";
     }
 
