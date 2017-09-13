@@ -54,10 +54,11 @@
                         </div>
                         <div class="info-artist-location">
                             <p id="live">LIVE IN CONCERT</p>
-                            <p id="artist-name" th:text="${artistFirstName} + ' ' + ${artistLastName}"></p>
+                            <p id="artist-name" th:text="${show.locationName} + ' ' + ${show.locationAddress}"></p>
+                            <p id="show-times" th:text="${show.locationName} + ' ' + ${show.locationAddress}"></p>
                             <p id="asterisk">******</p>
-                            <p class ="show-info-name" th:text="${show.locationName}"></p>
-                            <p class ="show-info-address" th:text="${show.locationAddress}"></p>
+                            <p class ="show-info-name" th:text="${artistFirstName}"></p>
+                            <p class ="show-info-address" th:text="${artistLastName}"></p>
                         </div>
                         <div class="barcode">
                             <p>Invisible p tag</p>

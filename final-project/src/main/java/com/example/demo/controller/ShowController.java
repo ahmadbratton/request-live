@@ -135,6 +135,9 @@ public class ShowController {
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
         }
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        
+
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Show> allShows = currentArtist.getShows();
         String artistFirstName = currentArtist.getFirstName().toUpperCase();
