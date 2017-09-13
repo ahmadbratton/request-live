@@ -29,7 +29,7 @@
             </div>
         </nav>
     </div>
-    <h1 class="view-shows-h1">Your Shows</h1>
+    <h1 class="view-shows-h1" th:text="${currentArtist.firstName} + ' ' + ${currentArtist.lastName} + '\'s Shows'"></h1>
     <div class="showContainer" th:each="show : ${allShows}">
         <div class="allShows" >
             <div class="showInfo" >
@@ -54,10 +54,11 @@
                         </div>
                         <div class="info-artist-location">
                             <p id="live">LIVE IN CONCERT</p>
-                            <p id="artist-name" th:text="${artistFirstName} + ' ' + ${artistLastName}"></p>
+                            <p id="artist-name" th:text="${show.locationName}"></p>
                             <p id="asterisk">******</p>
-                            <p class ="show-info-name" th:text="${show.locationName}"></p>
                             <p class ="show-info-address" th:text="${show.locationAddress}"></p>
+                            <p class ="show-info-name" th:text="${show.dateFormatted}"></p>
+                            <p class="time" th:text="${show.startTimeFormatted} + ' - ' + ${show.endtimeFormatted}"></p>
                         </div>
                         <div class="barcode">
                             <p>Invisible p tag</p>

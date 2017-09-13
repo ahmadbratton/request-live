@@ -34,6 +34,15 @@ public class Show {
     @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a")
     private Date endTime;
 
+    @Column(name="startTimeFormatted")
+    private String startTimeFormatted;
+
+    @Column(name="endTimeFormatted")
+    private String endtimeFormatted;
+
+    @Column(name="dateFormatted")
+    private String dateFormatted;
+
     @ManyToOne
     private Playlist playlist;
 
@@ -62,6 +71,30 @@ public class Show {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.isStarted = false;
+    }
+
+    public String getStartTimeFormatted() {
+        return startTimeFormatted;
+    }
+
+    public void setStartTimeFormatted(String startTimeFormatted) {
+        this.startTimeFormatted = startTimeFormatted;
+    }
+
+    public String getEndtimeFormatted() {
+        return endtimeFormatted;
+    }
+
+    public void setEndtimeFormatted(String endtimeFormatted) {
+        this.endtimeFormatted = endtimeFormatted;
+    }
+
+    public String getDateFormatted() {
+        return dateFormatted;
+    }
+
+    public void setDateFormatted(String dateFormatted) {
+        this.dateFormatted = dateFormatted;
     }
 
     public Queue getSongQueue() {
@@ -155,8 +188,11 @@ public class Show {
                 ", locationAddress='" + locationAddress + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", startTimeFormatted='" + startTimeFormatted + '\'' +
+                ", endtimeFormatted='" + endtimeFormatted + '\'' +
+                ", dateFormatted='" + dateFormatted + '\'' +
                 ", playlist=" + playlist +
-//                ", songQueue=" + songQueue +
+                ", songQueue=" + songQueue +
                 ", isStarted=" + isStarted +
                 '}';
     }

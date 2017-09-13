@@ -99,6 +99,11 @@ display: flex;
     margin-bottom: 0px;
 }
 
+.time {
+    font-size: 80%;
+    margin-bottom: 0px;
+}
+
 .show-info-address {
     font-size: 80%;
     margin-bottom: 0px;
