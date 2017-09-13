@@ -137,12 +137,37 @@ public class ShowController {
         }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Show> allShows = currentArtist.getShows();
+
+
+
+        String date = "";
+        String startTime = "";
+        String endTime = "";
+        for (int i=0 ; i < allShows.size() ; i++) {
+            Show currentShow = allShows.get(i);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+
+            String startString = formatter.format(currentShow.getStartTime());
+            String endString = formatter.format(currentShow.getEndTime());
+
+            date = startString.substring(0, 10);
+            startTime = startString.substring(11, startString.length());
+            endTime = endString.substring(11, endString.length());
+            currentShow.setDateFormatted(date);
+            currentShow.setStartTimeFormatted(startTime);
+            currentShow.setEndtimeFormatted(endTime);
+            showRepo.save(currentShow);
+            System.out.println(date);
+        }
+
         String artistFirstName = currentArtist.getFirstName().toUpperCase();
         String artistLastName = currentArtist.getLastName().toUpperCase();
         model.addAttribute("allShows", allShows);
         model.addAttribute("currentArtist", currentArtist);
         model.addAttribute("artistFirstName", artistFirstName);
         model.addAttribute("artistLastName", artistLastName);
+
         return "view-shows";
     }
 
