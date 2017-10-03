@@ -10,4 +10,5 @@ import java.util.List;
  * Created by duhlig on 8/17/17.
  */
 public interface ShowRepository extends CrudRepository<Show, Integer> {
+
 }

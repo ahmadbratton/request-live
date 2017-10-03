@@ -42,11 +42,21 @@ h2 {
     text-align: center;
 }
 
-h1 {
-    color: white;
-    background-color: rgba(0,0,0,.7);
+/*h1 {
+
+
     padding: 2%;
     margin-bottom: 3%;
+}*/
+
+.h2 {
+    margin: 0px;
+}
+
+.header {
+    background-color: rgba(0,0,0,.7);
+    color: white;
+    margin-bottom: 2%;
 }
 
 .mark-as-played {

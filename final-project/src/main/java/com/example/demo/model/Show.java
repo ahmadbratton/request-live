@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,15 @@ public class Show {
     @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a")
     private Date endTime;
 
+    @Column(name="startTimeFormatted")
+    private String startTimeFormatted;
+
+    @Column(name="endTimeFormatted")
+    private String endtimeFormatted;
+
+    @Column(name="dateFormatted")
+    private String dateFormatted;
+
     @ManyToOne
     private Playlist playlist;
 
@@ -62,6 +72,30 @@ public class Show {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.isStarted = false;
+    }
+
+    public String getStartTimeFormatted() {
+        return startTimeFormatted;
+    }
+
+    public void setStartTimeFormatted(String startTimeFormatted) {
+        this.startTimeFormatted = startTimeFormatted;
+    }
+
+    public String getEndtimeFormatted() {
+        return endtimeFormatted;
+    }
+
+    public void setEndtimeFormatted(String endtimeFormatted) {
+        this.endtimeFormatted = endtimeFormatted;
+    }
+
+    public String getDateFormatted() {
+        return dateFormatted;
+    }
+
+    public void setDateFormatted(String dateFormatted) {
+        this.dateFormatted = dateFormatted;
     }
 
     public Queue getSongQueue() {
@@ -155,9 +189,46 @@ public class Show {
                 ", locationAddress='" + locationAddress + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", startTimeFormatted='" + startTimeFormatted + '\'' +
+                ", endtimeFormatted='" + endtimeFormatted + '\'' +
+                ", dateFormatted='" + dateFormatted + '\'' +
                 ", playlist=" + playlist +
-//                ", songQueue=" + songQueue +
+                ", songQueue=" + songQueue +
                 ", isStarted=" + isStarted +
                 '}';
     }
+
+    public Date formatDate(String date , String time ){
+        String startingtime = date + " " + time;
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        Date showtime = new Date();
+        String formatedDate="";
+
+        if(startingtime.length() >= 19) {
+            String datehalf = startingtime.substring(0, 16);
+            String AmOrPm = startingtime.substring(17, startingtime.length());
+            formatedDate = datehalf + ":00" + " " + AmOrPm;
+
+        }
+        else{
+            String datehalf = startingtime.substring(0, 15);
+            String AmOrPm = startingtime.substring(16, startingtime.length());
+            formatedDate = datehalf + ":00" + " " + AmOrPm;
+            System.out.println();
+        }
+
+        try{
+             showtime = formatter.parse(formatedDate);
+
+
+            return showtime;
+
+        }catch (Exception ex){
+            return null;
+        }
+    }
+
+
+
+
 }
