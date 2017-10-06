@@ -1,0 +1,113 @@
+
+
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    background: url("./img/login-pic_720.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.body-container {
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+    color: white;
+    overflow: scroll;
+}
+
+.navBar{
+    margin-top: 0px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+h1 {
+    text-align: center;
+    margin-right: 2%;
+}
+
+.submit-button {
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 1% 5%;
+}
+
+.playlist-name-container {
+    display: flex;
+    justify-content: center;
+}
+
+#playlist-name-btn {
+    width: 100%;
+    line-height: 250%;
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    border-radius: 5px;
+    color: white;
+}
+
+.edit-name-submit {
+    display: flex;
+    justify-content: center;
+    margin: 2%;
+}
+
+.playlist-name-form input {
+        width: 50%;
+        line-height: 250%;
+        overflow: visible;
+        line-height: 250%;
+        background-color: rgba(33,37,41,0);
+        border: none;
+        border-bottom: 1px solid white;
+        color: white;
+        font-size: 150%;
+}
+
+.playlist-name-form button {
+    line-height: 250%;
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    border-radius: 5px;
+    color: white;
+}
+
+table input {
+    line-height: 250%;
+    overflow: visible;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+form input::-webkit-input-placeholder {
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+}

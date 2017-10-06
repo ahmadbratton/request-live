@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Artist Registration</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/login.css}"/>
+</head>
+<body class="login-body">
+    <div class="container">
+        <h1 class="registerName">Artist Registration</h1>
+        <div class="login">
+            <form class="register-form" action="/api/artist/register" method="post">
+                <div class="link-container">
+                    <a class="links" href="/api/artist/login">Login</a>
+                    <a class="links" href="#">Register</a>
+                </div>
+                <input type="text" name="firstName" placeholder="First Name"/>
+                <input type="text" name="lastName" placeholder="Last Name"/>
+                <input type="email" name="email" placeholder="Email"/>
+                <input type="password" name="password" placeholder="Password"/>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

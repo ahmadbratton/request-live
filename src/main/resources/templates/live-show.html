@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Live Show</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/live-show.css}"/>
+</head>
+<body>
+    <div class="header">
+        <h1 class="venue" th:text="${currentShow.locationName}"></h1>
+        <h2 class="h2" th:text="${date}"></h2>
+        <h2 class="h2" th:text="${startTime} + ' - ' + ${endTime}"></h2>
+    </div>
+    <div class="table-container">
+        <div class="playlist-container">
+            <h2>Playlist</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Original Artist</th>
+                    <th> Song Name</th>
+                    <th> Genre </th>
+                </tr>
+                </thead>
+                <div th:each="song: ${playlistSongs}">
+                    <tbody th:if="${song.PlaylistVisible}" >
+                    <tr >
+                        <td th:text="${song.originalArtist}" ></td>
+                        <td  th:text="${song.songName}"> </td>
+                        <td th:text="${song.genre}" ></td>
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+        </div>
+
+        <div class="queue-container" th:if="${currentShow.songQueue} == null or ${#lists.isEmpty(queueSongs)}">
+            <h2>Song Queue</h2>
+            <p class="no-songs">There Are Currently No Songs In The Queue</p>
+        </div>
+        <div class="queue-table queue-container" th:if="${currentShow.songQueue} != null and ${! #lists.isEmpty(queueSongs)} ">
+            <h2>Song Queue</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Original Artist</th>
+                    <th> Song Name</th>
+                    <th> Genre </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <div th:each="song: ${queueSongs}" >
+                    <tbody>
+                    <tr>
+                        <td th:text="${song.originalArtist}" ></td>
+                        <td  th:text="${song.songName}"> </td>
+                        <td th:text="${song.genre}" ></td>
+                        <td>
+                            <form th:action="@{'/api/' + ${showId} + '/' + ${song.songId} + '/mark-as-played'}" th:method="delete">
+                                <button class="mark-as-played btn btn-outline-dark" type="submit">Mark As Played</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+        </div>
+
+    </div>
+    <form class="end-show-form" th:action="@{'/api/' + ${showId} + '/end-show'}" th:method="post">
+        <button class="end-show btn btn-outline-dark" type="submit">End Show</button>
+    </form>
+</body>
+</html>
