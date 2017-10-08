@@ -7,6 +7,18 @@
     <link  rel="stylesheet" th:href="@{/user-view-show.css}"/>
 </head>
 <body>
+<div class="navBar">
+    <nav>
+        <div class="tags">
+            <div class="showCreateTag">
+                <a th:href="@{ '/api/user/' + ${show.showId} + '/artist-playlist' }"> View set list </a>
+            </div>
+            <div class="playlistCreateTag">
+                <a th:href="@{ '/api/' + ${show.showId} + '/view-queue' }"> view song queue </a>
+            </div>
+        </div>
+    </nav>
+</div>
 <div class="show-info">
     <h1 th:text="${showLocation}"></h1>
     <h1 th:text="${showAddress}"></h1>

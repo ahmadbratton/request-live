@@ -128,7 +128,9 @@ public class ShowController {
 
     @GetMapping("/{showId}/add-playlist")
     public String renderAddPlaylist(@PathVariable int showId, Model model, HttpSession session) {
-
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         Show show = showRepo.findOne(showId);
 //        Iterable<Playlist> playlists = playlistRepo.findAll();
@@ -241,7 +243,7 @@ public class ShowController {
         }
         post("/receive-sms", (req, res) -> {
             Message sms = new Message.Builder()
-                    .body(new Body("http://localhost:8080/api/user/" + showId + "/artist-playlist" ))
+                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
                     .build();
             MessagingResponse twiml = new MessagingResponse.Builder()
                     .message(sms)
@@ -254,7 +256,9 @@ public class ShowController {
 
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
-
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Show currentShow = showRepo.findOne(showId);
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
@@ -305,6 +309,9 @@ public class ShowController {
 
     @GetMapping("{showId}/edit-show")
     public String renderEditShow(@PathVariable int showId, Model model, HttpSession session) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Playlist> artistPlaylists = currentArtist.getArtistPlaylists();
         Show show = showRepo.findOne(showId);
@@ -418,12 +425,13 @@ public class ShowController {
         currentShow.setStarted(false);
         System.out.println(currentShow.getStarted());
         Queue showQueue = currentShow.getSongQueue();
-        int queueId = showQueue.getQueueId();
-        List<Song> songsQueue = showQueue.getSongs();
-        System.out.println(songsQueue.size());
+//        int queueId = showQueue.getQueueId();
+        if (showQueue != null) {
+            List<Song> songsQueue = showQueue.getSongs();
+            System.out.println(songsQueue.size());
 //
-        songsQueue.clear();
-
+            songsQueue.clear();
+        }
 //
         showRepo.save(currentShow);
 

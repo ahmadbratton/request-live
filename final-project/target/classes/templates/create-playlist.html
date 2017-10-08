@@ -7,6 +7,21 @@
     <title>Create Playlist</title>
 </head>
 <body>
+<div class="navBar">
+    <nav>
+        <div class="tags">
+            <div class="showCreateTag">
+                <a th:href="@{/api/create-show}"> Create a new Show </a>
+            </div>
+            <div class="playlistCreateTag">
+                <a th:href="@{/api/create-playlist}"> Create a new Playlist </a>
+            </div>
+            <div>
+                <a th:href="@{/api/view-shows}"> View Shows </a>
+            </div>
+        </div>
+    </nav>
+</div>
     <div class="playlistName-container" th:if="${nameOfPlaylist} == null">
         <div class="playlistName-form-container">
             <form id="playlist-name-form" action="/api/create-playlist" method="post">
