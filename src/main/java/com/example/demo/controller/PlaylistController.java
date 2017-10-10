@@ -85,6 +85,9 @@ public class PlaylistController {
 
     @GetMapping("/{showId}/{playlistId}/add-song")
     public String renderAddSongPlaylist(@PathVariable int showId, @PathVariable int playlistId, Model model, HttpSession session) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         Playlist currentPlaylist = playlistRepo.findOne(playlistId);
         Show show = showRepo.findOne(showId);
@@ -104,7 +107,10 @@ public class PlaylistController {
 
 
     @GetMapping("/{playlistId}/add-song")
-    public String renderAddSong(@PathVariable int playlistId, Model model) {
+    public String renderAddSong(@PathVariable int playlistId, Model model , HttpSession session) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Playlist currentPlaylist = playlistRepo.findOne(playlistId);
 
         model.addAttribute("nameOfPlaylist", currentPlaylist.getPlaylistName());
@@ -219,6 +225,7 @@ public class PlaylistController {
     @GetMapping("/view-playlist")
     @CrossOrigin
     public List<Playlist> viewPlaylists(HttpSession session){
+
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
         return artistPlaylist;
@@ -233,7 +240,10 @@ public class PlaylistController {
     }
 
     @GetMapping("/{playlistId}/view-playlist")
-    public String viewPlaylistById(@PathVariable int playlistId , Model model ){
+    public String viewPlaylistById(@PathVariable int playlistId , Model model , HttpSession session ){
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Playlist playlist = playlistRepo.findOne(playlistId);
         model.addAttribute("playlist",playlist);
         model.addAttribute("songs", playlist.getSongsList());

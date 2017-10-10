@@ -5,6 +5,7 @@ import com.example.demo.model.*;
 import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.SongRepository;
+import com.sun.media.jfxmedia.events.PlayerStateListener;
 import com.twilio.twiml.Play;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class ArtistController {
     @GetMapping("/register")
     public String renderRegister(){
         return "register";
+    }
+
+    @GetMapping("/")
+    public String renderindex(){
+
+        return "redirect:/api/artist/login";
     }
 
     @PostMapping("/register")
@@ -74,7 +81,11 @@ public class ArtistController {
     }
 
     @GetMapping("/login")
-    public String renderLogin(Model model) {
+    public String renderLogin(Model model , HttpSession session) {
+        if (session.getAttribute("artistId") != null){
+            return "redirect:/api/view-shows";
+        }
+
         String errorMessage = "email/password combination does not exist";
         model.addAttribute("loginError", Booleans.getLoginError());
         model.addAttribute("errorMessage", errorMessage);

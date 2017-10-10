@@ -37,3 +37,22 @@ body {
 #add-song {
     border-color: white;
 }
+.navBar{
+    margin-top: 0px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
