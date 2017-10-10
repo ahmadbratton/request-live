@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/add-playlist.css}"/>
+    <title>Title</title>
+</head>
+<body>
+    <div class="show-info">
+        <h3 th:text="${show.locationName}"></h3>
+        <h3 th:text="${show.locationAddress}"></h3>
+        <h3 th:text="${startTime}"></h3>
+        <h3 th:text="${endTime}"></h3>
+    </div>
+    <div class="button-container" >
+        <div class="buttons">
+            <div th:if="${renderPlaylistCreator} == false" class="add-playlist-container">
+                <form class="buttons-form" th:action="@{'/api/' + ${showId} + '/select-playlist-boolean'}" th:method="post">
+                    <button type="submit">Select A Playlist For This Show <i class="material-icons">keyboard_arrow_down</i></button>
+                </form>
+                <div class="playlist-list" th:if="${selectPlaylist} == true">
+                    <div  th:each="playlist : ${allPlaylists}">
+                        <!--<p th:text="${playlist.playlistName}"></p>-->
+                        <form class="playlist-forms" th:action="@{'/api/' + ${showId} + '/' + ${playlist.playlistId} + '/add-playlist'}" th:method="post">
+                            <button type="submit" th:text="${playlist.playlistName}"></button>
+                        </form>
+                    </div>
+                </div>
+                <form class="buttons-form" th:action="@{'/api/' + ${showId} + '/render-create-playlist'}" th:method="post">
+                    <button id="create-playlist-btn" type="submit">Create New Playlist</button>
+                </form>
+            </div>
+            <div th:if="${renderPlaylistCreator} == true" class="playlist-creator">
+                <div th:if="${nameOfPlaylist} == null">
+                    <form th:action="@{'/api/' + ${showId} + '/create-playlist'}" th:method="post">
+                        <input id="playlist-name-input" type="text" name="playlistName" placeholder="Playlist Name"/>
+                        <button id="playlist-name-submit" type="submit">Submit</button>
+                    </form>
+                </div>
+                <div th:if="${renderSongCreator} == true">
+                    <h4 class="playlistName-title" th:text="${nameOfPlaylist}"></h4>
+                    <h5 class="add-songs-title">Add Songs To Your Playlist</h5>
+                    <form th:action="@{'/api/' + ${showId} + '/' + ${playlistId} + '/add-song'}" th:method="post">
+                        <input type="text" name="originalArtist" placeholder="Original Artist"/>
+                        <input type="text" name="songName" placeholder="Song Name"/>
+                        <input type="text" name="genre" placeholder="Genre"/>
+                        <button type="submit">Add Song</button>
+                    </form>
+                </div>
+                <div th:if="${songList} != null">
+                    <!--<div th:each="song : ${songList}">-->
+                        <!--<p th:text="${song.originalArtist}"></p>-->
+                        <h5 class="current-songs-title">Current Songs In Playlist</h5>
+                        <span th:each="song : ${songList}" th:text="${song.songName} + ', '"></span>
+                        <!--<p th:text="${song.genre}"></p>-->
+                    <!--</div>-->
+                    <form id="create-playlist-button" th:action="@{'/api/' + ${showId} + '/submit-playlist'}" th:method="post">
+                        <button type="submit">Create Playlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/login.css}"/>
+    <title>Login</title>
+</head>
+<body class="login-body">
+    <div class="container" >
+        <h1 class="loginName">Welcome</h1>
+        <div class="login">
+            <p th:text="${error}"></p>
+            <form class="login-form" action="/api/artist/login" method="post">
+                <div class="link-container">
+                    <a class="links" href="#">Login</a>
+                    <a class="links" href="/api/artist/register">Register</a>
+                </div>
+                <p class="error" th:if="${loginError} == true" th:text="${errorMessage}"></p>
+                <input type="text" name="email" placeholder="email"/>
+                <input type="password" name="password" placeholder="password"/>
+                <button  class="btn btn-outline-dark">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

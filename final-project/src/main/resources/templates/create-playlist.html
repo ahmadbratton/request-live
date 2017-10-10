@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/create-playlist.css}"/>
+    <title>Create Playlist</title>
+</head>
+<body>
+<div class="navBar">
+    <nav>
+        <div class="tags">
+            <div class="showCreateTag">
+                <a th:href="@{/api/create-show}"> Create a new Show </a>
+            </div>
+            <div class="playlistCreateTag">
+                <a th:href="@{/api/create-playlist}"> Create a new Playlist </a>
+            </div>
+            <div>
+                <a th:href="@{/api/view-shows}"> View Shows </a>
+            </div>
+        </div>
+    </nav>
+</div>
+    <div class="playlistName-container" th:if="${nameOfPlaylist} == null">
+        <div class="playlistName-form-container">
+            <form id="playlist-name-form" action="/api/create-playlist" method="post">
+                <input id="playlistName-input" type="text" name="playlistName" placeholder="Playlist Name"/>
+                <button class="submit-button" type="submit">Submit</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="add-songs-container" th:if="${nameOfPlaylist} != null">
+        <div th:if="${nameOfPlaylist} != null">
+            <h4 th:text="${nameOfPlaylist}"></h4>
+            <form class="add-song-form" th:action="@{'/api/' + ${playlistId} + '/add-song'}" th:method="post">
+                <input type="text" name="originalArtist" placeholder="Original Artist"/>
+                <input type="text" name="songName" placeholder="Song Name"/>
+                <input type="text" name="genre" placeholder="Genre"/>
+                <button id="add-song-btn" type="submit">Add Song</button>
+            </form>
+        </div>
+        <div class="table-container" th:if="${songList} != null">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Original Artist</th>
+                    <th> Song Name</th>
+                    <th> Genre </th>
+                </tr>
+                </thead>
+                <div th:each="song : ${songList}">
+                    <tbody>
+                    <tr>
+                        <td th:text="${song.originalArtist}" ></td>
+                        <td  th:text="${song.songName}"> </td>
+                        <td th:text="${song.genre}" ></td>
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+            <form  th:action="@{'/api/' + ${playlistId} + '/playlist-created'}" method="post">
+                <button id="create-playlist-btn" type="submit">Create Playlist</button>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>
