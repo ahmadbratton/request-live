@@ -1,0 +1,145 @@
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    background: url("./img/login-pic_720.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    height: 70%;
+}
+
+.show-info {
+    text-align: center;
+    border-bottom: 3px solid black;
+    color: white;
+    background-color: rgba(0,0,0,.5);
+}
+
+.buttons {
+    background-color: rgba(0,0,0,.7);
+    margin-top: 10%;
+
+    height: auto;
+    height: 90%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+.add-playlist-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-form {
+    width: 70%;
+}
+
+.playlist-list {
+    width: 70%;
+    overflow: scroll;
+}
+
+.buttons button {
+    width: 100%;
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.playlist-forms {
+    margin: 0%;
+    width: 100%;
+}
+
+#create-playlist-btn {
+    margin: 5%;
+    margin-left: 0%;
+}
+
+.playlist-creator {
+    width: 70%;
+    overflow: scroll;
+}
+
+#playlist-name-input{
+    width: 100%;
+    margin: 5%;
+    margin-left: 0%;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+#playlist-name-submit {
+    margin: 5%;
+    margin-left: 0%;
+}
+
+form input::-webkit-input-placeholder {
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+}
+
+form input {
+    overflow: visible;
+    margin: 5%;
+    margin-left: 0%;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.playlistName-title {
+    color: white;
+    text-align: center;
+}
+
+.add-songs-title {
+    color: white;
+    margin-top: 8%;
+    margin-bottom: none;
+}
+
+span {
+    color: white;
+}
+
+.current-songs-title {
+    color: white;
+    text-decoration: underline;
+    margin-top: 5%;
+}
+
+#create-playlist-button {
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+

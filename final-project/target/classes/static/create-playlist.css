@@ -1,0 +1,140 @@
+html {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+    background: url("./img/login-pic_720.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.playlistName-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playlistName-form-container {
+   padding: 15% 10%;
+   background-color: rgba(0,0,0,.5);
+   margin-top: -10%;
+   border-radius: 10px;
+    width: 60%;
+}
+
+#playlistName-input {
+    width: 100%;
+    margin-bottom: 10%;
+    line-height: 250%;
+    overflow: visible;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+
+form input::-webkit-input-placeholder {
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+}
+
+#playlist-name-form {
+    width: 100%;
+}
+
+.submit-button {
+    width: 100%;
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.add-songs-container {
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+}
+
+h4 {
+    color: white;
+    text-align: center;
+    padding-top: 3%;
+}
+
+.add-song-form input {
+    width: 20%;
+    margin: 5% 3%;
+    line-height: 250%;
+    overflow: visible;
+    line-height: 250%;
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+
+
+#add-song-btn {
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 1% 5%;
+
+}
+
+.table-container {
+    color: white;
+}
+
+#create-playlist-btn {
+    border: 1px solid white;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    border-radius: 5px;
+    padding: 1% 5%;
+}
+.navBar{
+    margin-top: 0px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+@media only screen and (max-width: 650px) {
+    #add-song-btn {
+        margin-bottom: 5%;
+        width: 100%;
+    }
+    .add-song-form input::placeholder{
+        font-size: 5%;
+    }
+    #create-playlist-btn {
+        width: 100%;
+    }
+}

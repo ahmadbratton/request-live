@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
     <title>View Shows</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
     <link  rel="stylesheet" th:href="@{/view-shows.css}"/>
@@ -54,11 +54,13 @@
                         </div>
                         <div class="info-artist-location">
                             <p id="live">LIVE IN CONCERT</p>
+
                             <p id="artist-name" th:text="${show.locationName}"></p>
                             <p id="asterisk">******</p>
                             <p class ="show-info-address" th:text="${show.locationAddress}"></p>
                             <p class ="show-info-name" th:text="${show.dateFormatted}"></p>
                             <p class="time" th:text="${show.startTimeFormatted} + ' - ' + ${show.endtimeFormatted}"></p>
+
                         </div>
                         <div class="barcode">
                             <p>Invisible p tag</p>

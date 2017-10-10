@@ -33,6 +33,12 @@ public class ArtistController {
         return "register";
     }
 
+    @GetMapping("/")
+    public String renderindex(){
+
+        return "redirect:/api/artist/login";
+    }
+
     @PostMapping("/register")
     public String artistSignUp(String firstName, String lastName, String email, String password){
 
@@ -75,7 +81,11 @@ public class ArtistController {
     }
 
     @GetMapping("/login")
-    public String renderLogin(Model model) {
+    public String renderLogin(Model model , HttpSession session) {
+        if (session.getAttribute("artistId") != null){
+            return "redirect:/api/view-shows";
+        }
+
         String errorMessage = "email/password combination does not exist";
         model.addAttribute("loginError", Booleans.getLoginError());
         model.addAttribute("errorMessage", errorMessage);

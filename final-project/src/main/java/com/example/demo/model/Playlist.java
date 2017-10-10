@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
-import com.sun.istack.internal.Nullable;
 
+
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.List;
 
