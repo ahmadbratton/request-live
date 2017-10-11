@@ -33,11 +33,7 @@ public class ArtistController {
         return "register";
     }
 
-    @GetMapping("/")
-    public String renderindex(){
 
-        return "redirect:/api/artist/login";
-    }
 
     @PostMapping("/register")
     public String artistSignUp(String firstName, String lastName, String email, String password){

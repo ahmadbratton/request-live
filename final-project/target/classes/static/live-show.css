@@ -21,12 +21,15 @@ body {
     background-color: rgba(0,0,0,.7);
     border-radius: 10px;
     width: 45%;
+    margin:2.5%;
+
 }
 
 .queue-container {
     background-color: rgba(0,0,0,.7);
     border-radius: 10px;
     width: 45%;
+    margin:2.5%;
 }
 
 h2 {
@@ -95,4 +98,31 @@ h2 {
 .tag a{
     color:white;
     margin: 10px;
+}
+
+.table-container{
+    display: flex;
+    justify-content: center;
+
+}
+@media only screen and (max-width: 1025px) {
+    .playlist-container {
+
+        width: 100%;
+
+        margin: 0%;
+
+    }
+
+    .queue-container {
+
+        width: 100%;
+        margin: 0% 0% 2% 0%;
+    }
+
+    .table-container{
+        display: flex;
+        flex-direction: column-reverse;
+        
+    }
 }
