@@ -14,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,58 +58,10 @@ public class ShowController {
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
 
-        String startingtime = date + " " + startTime;
-        String endingtime = date + " " + endTime;
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-        Date showStart = new Date();
-        Date showEnd = new Date();
-        String formatedDate="";
-        String endFormatedDate="";
-        if(startingtime.length() >= 19) {
-            String datehalf = startingtime.substring(0, 16);
-            String AmOrPm = startingtime.substring(17, startingtime.length());
-            formatedDate = datehalf + ":00" + " " + AmOrPm;
-            System.out.println("formated correctlly date " + formatedDate);
-        }
-        else{
-            String datehalf = startingtime.substring(0, 15);
-            String AmOrPm = startingtime.substring(16, startingtime.length());
-             formatedDate = datehalf + ":00" + " " + AmOrPm;
-            System.out.println("formated correctlly date " + formatedDate);
-        }
-
-        if (endingtime.length() >= 19) {
-            String enddatehalf = endingtime.substring(0, 16);
-            String endAmOrPm = endingtime.substring(17, endingtime.length());
-             endFormatedDate = enddatehalf + ":00" + " " + endAmOrPm;
-        }
-        else {
-            String enddatehalf = endingtime.substring(0, 15);
-            String endAmOrPm = endingtime.substring(16, endingtime.length());
-             endFormatedDate = enddatehalf + ":00" + " " + endAmOrPm;
-        }
-        System.out.println("formated correctlly start date " + formatedDate);
-
-        System.out.println("formated correctlly end date " + endFormatedDate);
-//
-        System.out.println(startingtime);
-
-        try{
-             showStart = formatter.parse(formatedDate);
-
-            showEnd = formatter.parse(endFormatedDate);
-
-        }catch (Exception ex){
-            System.out.println("could not format correctly");
-        }
-
-
-
-        System.out.println("show start time" + showStart);
-
-        System.out.println("show end time" + showEnd);
 
         Show newShow = new Show();
+        Date showStart = newShow.formatDate(date, startTime);
+        Date showEnd = newShow.formatDate(date , endTime);
         List<Show> showList = createdBy.getShows();
         newShow.setStarted(false);
         newShow.setLocationName(locationName);
@@ -137,6 +86,9 @@ public class ShowController {
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
         }
+//        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        
+
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Show> allShows = currentArtist.getShows();
 
@@ -175,7 +127,9 @@ public class ShowController {
 
     @GetMapping("/{showId}/add-playlist")
     public String renderAddPlaylist(@PathVariable int showId, Model model, HttpSession session) {
-
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         Show show = showRepo.findOne(showId);
 //        Iterable<Playlist> playlists = playlistRepo.findAll();
@@ -271,6 +225,8 @@ public class ShowController {
         return "redirect:/api/view-shows";
     }
 
+
+
     @PostMapping("/start-show/{showId}")
     public String startShow(@PathVariable int showId) {
         Show currentShow = showRepo.findOne(showId);
@@ -284,7 +240,7 @@ public class ShowController {
         }
         post("/receive-sms", (req, res) -> {
             Message sms = new Message.Builder()
-                    .body(new Body("http://localhost:8080/api/user/" + showId + "/artist-playlist" ))
+                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
                     .build();
             MessagingResponse twiml = new MessagingResponse.Builder()
                     .message(sms)
@@ -297,7 +253,9 @@ public class ShowController {
 
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
-
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Show currentShow = showRepo.findOne(showId);
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
@@ -348,9 +306,29 @@ public class ShowController {
 
     @GetMapping("{showId}/edit-show")
     public String renderEditShow(@PathVariable int showId, Model model, HttpSession session) {
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         List<Playlist> artistPlaylists = currentArtist.getArtistPlaylists();
         Show show = showRepo.findOne(showId);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+
+        String startString = formatter.format(show.getStartTime());
+        String endString = formatter.format(show.getEndTime());
+
+        String date = startString.substring(0, 10);
+        String startTime = startString.substring(11, startString.length());
+        String endTime = endString.substring(11, endString.length());
+
+        System.out.println("edit show date " + date);
+        System.out.println("edit show startTime " + startTime);
+        System.out.println("edit show endTime " + endTime);
+
+        model.addAttribute("date", date );
+        model.addAttribute("startTime", startTime );
+        model.addAttribute("endTime", endTime );
         model.addAttribute("show", show);
         model.addAttribute("artistPlaylists", artistPlaylists);
         model.addAttribute("editLocation", Booleans.getEditLocation());
@@ -361,12 +339,18 @@ public class ShowController {
     }
 
     @PostMapping("/{showId}/edit-show-info")
-    public String editShowInfo(@PathVariable int showId, String locationName, String locationAddress){
+    public String editShowInfo(@PathVariable int showId, String locationName, String locationAddress , String showDate , String startTime , String endTime){
         Show currentShow = showRepo.findOne(showId);
+
+        Date startDate = currentShow.formatDate(showDate, startTime);
+        Date endDate =  currentShow.formatDate(showDate , endTime);
+
+        currentShow.setStartTime(startDate);
+        currentShow.setEndTime(endDate);
         currentShow.setLocationName(locationName);
         currentShow.setLocationAddress(locationAddress);
         showRepo.save(currentShow);
-        return "redirect:/api/" + showId + "/edit-show";
+        return "redirect:/api/view-shows";
     }
 
     @PostMapping("/{showId}/{playlistId}/edit-show")
@@ -385,10 +369,50 @@ public class ShowController {
         return "redirect:/api/" + showId + "/edit-show";
     }
 
-    @PostMapping("/{showId}/edit-add-playlist")
-    public String editAddPlaylist(@PathVariable int showId) {
-        Show currentShow = showRepo.findOne(showId);
+//    @GetMapping("/{showId}/edit-add-playlist")
+//    public String edit_add_playlist(@PathVariable int showId , Model model , HttpSession session ) {
+//            Show currentShow = showRepo.findOne(showId);
+//        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+//
+//
+//            model.addAttribute("artist", currentArtist);
+//        return "edit-show-add-playlist";
+//    }
+
+    @PostMapping("/{showId}/edit-playlist-boolean")
+    public String editPlaylistBoolean(@PathVariable int showId) {
+
         Booleans.setEditAddPlaylist(true);
+        return "redirect:/api/" + showId + "/edit-show";
+    }
+
+    @PostMapping("/{showId}/{playlistId}/edit-add-playlist")
+    public String editAddPlaylist(@PathVariable int showId, @PathVariable int playlistId, HttpSession session) {
+        Show currentShow = showRepo.findOne(showId);
+//        Booleans.setEditAddPlaylist(true);
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        Show show = showRepo.findOne(showId);
+        Playlist currentPlaylist = playlistRepo.findOne(playlistId);
+        show.setPlaylist(currentPlaylist);
+
+//        ArrayList<Playlist> artistPlaylist = new ArrayList<>();
+//        currentArtist.getArtistPlaylists().forEach(artistPlaylist::add);
+
+
+//        for (Playlist listChoice: artistPlaylist) {
+//            if (listChoice.getPlaylistName().equals(currentPlaylist.getPlaylistName())){
+//                playlists.add(listChoice);
+//                System.out.println("this is the playlist: " + playlists);
+//            }
+//        }
+
+        try{
+            showRepo.save(show);
+        }
+        catch (Exception ex){
+            return "redirect:/api/" + showId + "/edit-show";
+        }
+
         return "redirect:/api/" + showId + "/edit-show";
     }
 
@@ -398,12 +422,13 @@ public class ShowController {
         currentShow.setStarted(false);
         System.out.println(currentShow.getStarted());
         Queue showQueue = currentShow.getSongQueue();
-        int queueId = showQueue.getQueueId();
-        List<Song> songsQueue = showQueue.getSongs();
-        System.out.println(songsQueue.size());
+//        int queueId = showQueue.getQueueId();
+        if (showQueue != null) {
+            List<Song> songsQueue = showQueue.getSongs();
+            System.out.println(songsQueue.size());
 //
-        songsQueue.clear();
-
+            songsQueue.clear();
+        }
 //
         showRepo.save(currentShow);
 

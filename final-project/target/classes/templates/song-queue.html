@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <link  rel="stylesheet" th:href="@{/user-view-show.css}"/>
+</head>
+<body>
+<div class="navBar">
+    <nav>
+        <div class="tags">
+            <div class="showCreateTag">
+                <a th:href="@{'/api/user/' + ${show.showId} + '/artist-playlist' } "> View set list </a>
+            </div>
+            <div class="playlistCreateTag">
+                <a th:href="@{'/api/' + ${show.showId} + '/view-queue' }"> view song queue </a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="show-info">
+    <h1 th:text="${showLocation}"></h1>
+    <h1 th:text="${showAddress}"></h1>
+</div>
+<table id="song-table" class="table table-hover table-inverse">
+    <thead>
+    <tr>
+        <th id="artist">Original Artist</th>
+        <th id="song"> Song Name</th>
+        <th id="genre"> Genre </th>
+
+    </tr>
+    </thead>
+    <div th:each="songs: ${songs}">
+            <tbody>
+            <tr>
+                <td th:text="${songs.originalArtist}" ></td>
+                <td  th:text="${songs.songName}"> </td>
+                <td th:text="${songs.genre}" ></td>
+            </tr>
+            </tbody>
+    </div>
+</table>
+</body>
+</html>

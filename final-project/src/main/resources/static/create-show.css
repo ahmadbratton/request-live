@@ -13,13 +13,8 @@ body {
    height: 70px;
    display: flex;
    align-items: center;
-   margin-top: 17px;
-   margin-bottom: 15px;
    width: 100%;
-   position: fixed;
-   margin-top: 0px;
-   top: 0px;
-   z-index: 1;
+    height: 12%;
 }
 
 .tags {
@@ -35,7 +30,9 @@ body {
 
 h1 {
     color: white;
-    margin: 12%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
     text-decoration: underline;
 }
 
@@ -88,4 +85,17 @@ h1 {
 
 .form button:hover {
     color: white;
+}
+
+@media only screen and (max-width: 1025px) {
+    h1 {
+        margin-bottom: 10%;
+        margin-top: 10%;
+        font-size: 3rem;
+    }
+
+    .form-container {
+        width: 90%;
+        height: 65%;
+    }
 }

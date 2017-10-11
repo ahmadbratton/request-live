@@ -12,10 +12,6 @@ body {
     background-attachment: fixed;
 }
 
-.table-container {
-    display: flex;
-    justify-content: space-around;
-}
 
 .venue {
     text-align: center;
@@ -78,4 +74,25 @@ h2 {
     padding: 3%;
     margin: 2% 0%;
     font-size: 150%;
+}
+
+.navi{
+    margin-top: 0px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tag {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+
+.tag a{
+    color:white;
+    margin: 10px;
 }

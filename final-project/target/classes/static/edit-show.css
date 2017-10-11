@@ -1,0 +1,126 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: currentColor;
+    background: radial-gradient(grey, rgb(33,37,41))
+}
+
+.navBar{
+    background-color: rgba(33,37,41, .4);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-top: 17px;
+    margin-bottom: 15px;
+    width: 100%;
+    position: fixed;
+    margin-top: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+h1 {
+    color: white;
+    margin: 12%;
+    text-decoration: underline;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: start;
+    height: 100%;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    width: 50%;
+    justify-content: center;
+    box-shadow: 0px 0px 20px 2px rgba(250,250,250,1);
+    background-color: rgba(33,37,41,.5);
+    border: 1px solid white;
+    border-radius: 30px;
+}
+
+.playlist-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.show-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 5%;
+}
+
+.show-form input {
+    background-color: rgba(33,37,41,0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.show-form input::-webkit-input-placeholder {
+    color: white;
+}
+
+.show-form input:focus {
+    outline: none;
+}
+
+.show-form button {
+    margin: 3%;
+    border: 1px solid white;
+    color: white;
+}
+
+.show-form button:hover {
+    color: white;
+}
+
+.show-form label {
+    margin-bottom: 0px;
+    margin-right: 4%;
+}
+
+.location-name {
+    display: flex;
+    margin-bottom: 5%;
+}
+
+.location-address {
+    display: flex;
+}
+
+.playlist-form button {
+    border: 1px solid white;
+    color: white;
+    width: 100%;
+    margin-bottom: 10%;
+}
+
+.playlist-form button:hover {
+    color: white;
+}
+
+
+

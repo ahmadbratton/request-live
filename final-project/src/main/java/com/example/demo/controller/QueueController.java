@@ -73,9 +73,11 @@ public class QueueController {
 
     @GetMapping("/{showId}/view-queue")
     String viewQueue(@PathVariable int showId, Model model) {
+
         Show currentShow = showRepo.findOne(showId);
         Queue currentQueue = currentShow.getSongQueue();
         List<Song> songList = currentQueue.getSongs();
+        model.addAttribute("show", currentShow);
         model.addAttribute("showLocation", currentShow.getLocationName());
         model.addAttribute("showAddress", currentShow.getLocationAddress());
         model.addAttribute("songs", songList);

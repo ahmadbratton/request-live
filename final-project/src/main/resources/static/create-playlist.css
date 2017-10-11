@@ -39,6 +39,7 @@ body {
     color: white;
 }
 
+
 form input::-webkit-input-placeholder {
     color: white;
 }
@@ -83,12 +84,15 @@ h4 {
     color: white;
 }
 
+
+
 #add-song-btn {
     border: 1px solid white;
     background-color: rgba(0,0,0,.5);
     color: white;
     border-radius: 5px;
     padding: 1% 5%;
+
 }
 
 .table-container {
@@ -102,4 +106,35 @@ h4 {
     border-radius: 5px;
     padding: 1% 5%;
 }
+.navBar{
+    margin-top: 0px;
+    background-color: black;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
+.tags {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-align: center;
+}
+.tags a{
+    color:white;
+    margin: 10px;
+}
+
+@media only screen and (max-width: 650px) {
+    #add-song-btn {
+        margin-bottom: 5%;
+        width: 100%;
+    }
+    .add-song-form input::placeholder{
+        font-size: 5%;
+    }
+    #create-playlist-btn {
+        width: 100%;
+    }
+}
