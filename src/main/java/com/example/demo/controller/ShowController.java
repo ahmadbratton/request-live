@@ -255,24 +255,41 @@ public class ShowController {
 //                    .build();
 //            return twiml.toXml();
 //        });
+        post("/receive-sms", (req,res) -> {
+            Message sms = new Message.Builder()
+                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
+                    .build();
+            MessagingResponse twiml = new MessagingResponse.Builder()
+                    .message(sms)
+                    .build();
+            response.setContentType("application/xml");
+            try{
+                response.getWriter().print(twiml.toXml());
+                return twiml.toXml();
+            }catch (TwiMLException e){
+                e.printStackTrace();
+            }
+            return showId;
+        });
+
         showRepo.save(currentShow);
         return "redirect:/api/start-show/" +showId;
     }
-    @PostMapping("/receive-sms")
-    public void service(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Message sms = new Message.Builder()
-                .body(new Body("OJ rushed 2000 yards in a season" ))
-                .build();
-        MessagingResponse twiml = new MessagingResponse.Builder()
-                .message(sms)
-                .build();
-        response.setContentType("application/xml");
-        try{
-            response.getWriter().print(twiml.toXml());
-        }catch (TwiMLException e){
-            e.printStackTrace();
-        }
-    }
+//    @PostMapping("/receive-sms")
+//    public void service(HttpServletRequest request, HttpServletResponse response) throws IOException{
+//        Message sms = new Message.Builder()
+//                .body(new Body("OJ rushed 2000 yards in a season" ))
+//                .build();
+//        MessagingResponse twiml = new MessagingResponse.Builder()
+//                .message(sms)
+//                .build();
+//        response.setContentType("application/xml");
+//        try{
+//            response.getWriter().print(twiml.toXml());
+//        }catch (TwiMLException e){
+//            e.printStackTrace();
+//        }
+//    }
 
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
