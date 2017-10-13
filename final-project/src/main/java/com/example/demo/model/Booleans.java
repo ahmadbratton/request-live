@@ -13,11 +13,12 @@ public class Booleans {
     private static Boolean editSong = false;
     private static Boolean selectPlaylist = false;
     private static Boolean loginError = false;
-
+    private static Boolean refreshQueue = false;
+    private static Boolean threadWait = false;
     public Booleans() {
     }
 
-    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong, Boolean selectPlaylist, Boolean loginError) {
+    public Booleans(Boolean renderPlaylistCreator, Boolean renderSongCreator, Boolean editLocation, Boolean editAddPlaylist, Boolean editPlaylist, Boolean editPlaylistName, Boolean editSong, Boolean selectPlaylist, Boolean loginError, Boolean refreshQueue, Boolean threadWait ) {
         this.renderPlaylistCreator = renderPlaylistCreator;
         this.renderSongCreator = renderSongCreator;
         this.editLocation = editLocation;
@@ -27,6 +28,24 @@ public class Booleans {
         this.editSong = editSong;
         this.selectPlaylist = selectPlaylist;
         this.loginError = loginError;
+        this.refreshQueue = refreshQueue;
+        this.threadWait = threadWait;
+    }
+
+    public static Boolean getThreadWait() {
+        return threadWait;
+    }
+
+    public static void setThreadWait(Boolean threadWait) {
+        Booleans.threadWait = threadWait;
+    }
+
+    public static Boolean getRefreshQueue() {
+        return refreshQueue;
+    }
+
+    public static void setRefreshQueue(Boolean refreshQueue) {
+        Booleans.refreshQueue = refreshQueue;
     }
 
     public static Boolean getLoginError() {
@@ -112,6 +131,9 @@ public class Booleans {
                 "editPlaylistName=" + editPlaylistName +
                 "editSong=" + editSong +
                 "selectPlaylist=" + selectPlaylist +
+                "refreshQueue=" + refreshQueue +
+                "threadWait=" + threadWait +
                 '}';
     }
+
 }

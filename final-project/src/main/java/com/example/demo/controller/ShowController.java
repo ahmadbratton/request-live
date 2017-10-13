@@ -9,13 +9,17 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.twilio.twiml.Body;
 import com.twilio.twiml.Message;
 import com.twilio.twiml.MessagingResponse;
+import com.twilio.twiml.TwiMLException;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import static spark.Spark.post;
+import static spark.Spark.redirect;
 
 /**
  * Created by duhlig on 8/17/17.
@@ -228,8 +233,6 @@ public class ShowController {
         return "redirect:/api/view-shows";
     }
 
-
-
     @PostMapping("/start-show/{showId}")
     public String startShow(@PathVariable int showId) {
         Show currentShow = showRepo.findOne(showId);
@@ -241,24 +244,41 @@ public class ShowController {
             Song currentSong = playlistSongs.get(i);
             currentSong.setPlaylistVisible(true);
         }
-        post("/receive-sms", (req, res) -> {
-            Message sms = new Message.Builder()
-                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
-                    .build();
-            MessagingResponse twiml = new MessagingResponse.Builder()
-                    .message(sms)
-                    .build();
-            return twiml.toXml();
-        });
+//        post("/receive-sms", (req, res) -> {
+//            Message sms = new Message.Builder()
+//                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
+//                    .build();
+//            MessagingResponse twiml = new MessagingResponse.Builder()
+//                    .message(sms)
+//                    .build();
+//            return twiml.toXml();
+//        });
         showRepo.save(currentShow);
         return "redirect:/api/start-show/" +showId;
     }
 
+    @PostMapping("/receive-sms")
+    public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int textId = Show.getTempShowId();
+        Message sms = new Message.Builder()
+                .body(new Body("https://we-live-app.herokuapp.com/api/user/" + textId + "/artist-playlist" ))
+                .build();
+        MessagingResponse twiml = new MessagingResponse.Builder()
+                .message(sms)
+                .build();
+        response.setContentType("application/xml");
+        try{
+            response.getWriter().print(twiml.toXml());
+        }catch (TwiMLException e){
+            e.printStackTrace();
+        }
+    }
+
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
-        if (session.getAttribute("artistId") == null) {
-            return "redirect:/api/artist/login";
-        }
+//        if (session.getAttribute("artistId") == null) {
+//            return "redirect:/api/artist/login";
+//        }
         Show currentShow = showRepo.findOne(showId);
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
@@ -268,6 +288,42 @@ public class ShowController {
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
         }
+
+        Boolean refresh = Booleans.getRefreshQueue();
+
+
+
+        System.out.println("get refresh boolean " + refresh);
+
+
+
+
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//
+//                        while (refresh == false) {
+//                            if (refresh == true) {
+//                                Booleans.setRefreshQueue(false);
+//                                Booleans.setThreadWait(true);
+//                            }
+//                        }
+//                    }
+//                },
+//                2000
+//        );
+//
+//        Boolean addQ = Booleans.getThreadWait();
+//
+//        if (addQ == true){
+//            Booleans.setThreadWait(false);
+//          return  "redirect:/api/start-show/" + showId;
+//        }
+
+
+
+
         List<Song> queueSongs = new ArrayList<>();
         Playlist currentPlaylist = currentShow.getPlaylist();
         if (currentShow.getSongQueue() != null) {

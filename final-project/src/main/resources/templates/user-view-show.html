@@ -30,19 +30,18 @@
         <th id="artist">Original Artist</th>
         <th id="song"> Song Name</th>
         <th id="genre"> Genre </th>
-        <th id="add-song">Add Song To Queue</th>
     </tr>
     </thead>
     <div th:each="songs: ${showSongs}">
         <form th:action="@{ '/api/' + ${show.showId} + '/' + ${songs.songId}}" th:method="post" >
             <tbody>
-            <tr>
-                <td th:text="${songs.originalArtist}" ></td>
-                <td  th:text="${songs.songName}"> </td>
-                <td th:text="${songs.genre}" ></td>
-                <td>
-        <button type="submit" > add to queue </button>
-                </td>
+            <tr >
+                <!--<td id="button-row" >-->
+                    <!--<button type="submit" > add to queue </button>-->
+                <!--</td>-->
+                <td  > <button class="playlist-btn" type="submit" th:text="${songs.originalArtist}" ></button> </td>
+                <td  > <button class="playlist-btn" type="submit" th:text="${songs.songName}" > </button> </td>
+                <td > <button class="playlist-btn" type="submit" th:text="${songs.genre}" > </button></td>
             </tr>
             </tbody>
         </form>
