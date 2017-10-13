@@ -261,7 +261,7 @@ public class ShowController {
     @PostMapping("/receive-sms")
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Message sms = new Message.Builder()
-                .body(new Body("MeatSpin.com" ))
+                .body(new Body("this works" ))
                 .build();
         MessagingResponse twiml = new MessagingResponse.Builder()
                 .message(sms)
