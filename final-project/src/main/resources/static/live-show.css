@@ -106,6 +106,12 @@ h2 {
 
 }
 @media only screen and (max-width: 1025px) {
+
+    html{
+        min-width: 500px;
+        width: 100%;
+    }
+
     .playlist-container {
 
         width: 100%;
