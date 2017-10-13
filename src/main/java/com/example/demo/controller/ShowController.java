@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import static spark.Spark.post;
+import static spark.Spark.redirect;
 
 /**
  * Created by duhlig on 8/17/17.
@@ -232,8 +233,6 @@ public class ShowController {
         return "redirect:/api/view-shows";
     }
 
-
-
     @PostMapping("/start-show/{showId}")
     public String startShow(@PathVariable int showId, HttpServletRequest request, HttpServletResponse response) {
         Show currentShow = showRepo.findOne(showId);
@@ -276,11 +275,13 @@ public class ShowController {
         }
     }
 
+
+
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
-        if (session.getAttribute("artistId") == null) {
-            return "redirect:/api/artist/login";
-        }
+//        if (session.getAttribute("artistId") == null) {
+//            return "redirect:/api/artist/login";
+//        }
         Show currentShow = showRepo.findOne(showId);
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
@@ -290,6 +291,42 @@ public class ShowController {
         if (session.getAttribute("artistId") == null) {
             return "redirect:/api/artist/login";
         }
+
+        Boolean refresh = Booleans.getRefreshQueue();
+
+
+
+        System.out.println("get refresh boolean " + refresh);
+
+
+
+
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//
+//                        while (refresh == false) {
+//                            if (refresh == true) {
+//                                Booleans.setRefreshQueue(false);
+//                                Booleans.setThreadWait(true);
+//                            }
+//                        }
+//                    }
+//                },
+//                2000
+//        );
+//
+//        Boolean addQ = Booleans.getThreadWait();
+//
+//        if (addQ == true){
+//            Booleans.setThreadWait(false);
+//          return  "redirect:/api/start-show/" + showId;
+//        }
+
+
+
+
         List<Song> queueSongs = new ArrayList<>();
         Playlist currentPlaylist = currentShow.getPlaylist();
         if (currentShow.getSongQueue() != null) {

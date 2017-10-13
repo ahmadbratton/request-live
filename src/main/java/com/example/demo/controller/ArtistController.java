@@ -32,11 +32,12 @@ public class ArtistController {
         return "register";
     }
 
+<<<<<<< HEAD:src/main/java/com/example/demo/controller/ArtistController.java
     @GetMapping("/")
     public String renderIndex(){
+=======
+>>>>>>> d7718157bfd8754715e6e4551b1363525655bc42:final-project/src/main/java/com/example/demo/controller/ArtistController.java
 
-        return "redirect:/api/artist/login";
-    }
 
     @PostMapping("/register")
     public String artistSignUp(String firstName, String lastName, String email, String password){
