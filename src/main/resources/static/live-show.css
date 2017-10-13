@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    /*background: url("./img/guitar-amp_720.jpg");*/
+    background: url("./img/guitar-amp_720.jpg");
     background-size: cover;
     background-position: center;
     color: white;
