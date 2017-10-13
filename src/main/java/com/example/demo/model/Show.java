@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by duhlig on 8/16/17.
+ *
  */
 @Entity
 @Table(name="shows")
