@@ -33,7 +33,7 @@ public class ArtistController {
     }
 
     @GetMapping("/")
-    public String renderindex(){
+    public String renderIndex(){
 
         return "redirect:/api/artist/login";
     }
