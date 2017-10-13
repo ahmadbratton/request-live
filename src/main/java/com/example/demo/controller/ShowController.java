@@ -237,6 +237,7 @@ public class ShowController {
     @PostMapping("/start-show/{showId}")
     public String startShow(@PathVariable int showId, HttpServletRequest request, HttpServletResponse response) {
         Show currentShow = showRepo.findOne(showId);
+        Show.setTempShowId(currentShow.getShowId());
         currentShow.setStarted(true);
         System.out.println(currentShow.getStarted());
         Playlist currentPlaylist = currentShow.getPlaylist();
@@ -260,8 +261,9 @@ public class ShowController {
     }
     @PostMapping("/receive-sms")
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        int textId = Show.getTempShowId();
         Message sms = new Message.Builder()
-                .body(new Body("this works" ))
+                .body(new Body("https://we-live-app.herokuapp.com/api/user/" + textId + "/artist-playlist" ))
                 .build();
         MessagingResponse twiml = new MessagingResponse.Builder()
                 .message(sms)
