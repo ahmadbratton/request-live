@@ -319,7 +319,7 @@ public class ShowController {
 //        if (addQ == true){
 //            Booleans.setThreadWait(false);
 //          return  "redirect:/api/start-show/" + showId;
-        }
+//        }
 
 
 
