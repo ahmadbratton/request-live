@@ -246,15 +246,19 @@ public class ShowController {
             currentSong.setPlaylistVisible(true);
         }
 
-        post("/receive-sms", (req, res) -> {
+
             Message sms = new Message.Builder()
                     .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))
                     .build();
             MessagingResponse twiml = new MessagingResponse.Builder()
                     .message(sms)
                     .build();
-            return twiml.toXml();
-        });
+        try {
+            twiml.toXml();
+        } catch (TwiMLException e) {
+            e.printStackTrace();
+        }
+
         showRepo.save(currentShow);
         return "redirect:/api/start-show/" +showId;
     }
