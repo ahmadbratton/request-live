@@ -9,13 +9,17 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.twilio.twiml.Body;
 import com.twilio.twiml.Message;
 import com.twilio.twiml.MessagingResponse;
+import com.twilio.twiml.TwiMLException;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -231,7 +235,7 @@ public class ShowController {
 
 
     @PostMapping("/start-show/{showId}")
-    public String startShow(@PathVariable int showId) {
+    public String startShow(@PathVariable int showId, HttpServletRequest request, HttpServletResponse response) {
         Show currentShow = showRepo.findOne(showId);
         currentShow.setStarted(true);
         System.out.println(currentShow.getStarted());
@@ -241,6 +245,22 @@ public class ShowController {
             Song currentSong = playlistSongs.get(i);
             currentSong.setPlaylistVisible(true);
         }
+
+           Message sms =
+                    new Message.Builder().body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist")).build();
+
+            MessagingResponse twiml = new MessagingResponse.Builder().message(sms).build();
+
+            response.setContentType("application/xml");
+
+            try {
+                response.getWriter().print(twiml.toXml());
+            } catch (TwiMLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
 //        post("/receive-sms", (req, res) -> {
 //            Message sms = new Message.Builder()
