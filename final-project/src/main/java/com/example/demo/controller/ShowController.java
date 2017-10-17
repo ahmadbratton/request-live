@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -148,8 +149,6 @@ public class ShowController {
 
         List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
 
-
-
         String startString = formatter.format(show.getStartTime());
         String endString = formatter.format(show.getEndTime());
         System.out.println("get startdate "+ startString);
@@ -244,6 +243,7 @@ public class ShowController {
             Song currentSong = playlistSongs.get(i);
             currentSong.setPlaylistVisible(true);
         }
+
 //        post("/receive-sms", (req, res) -> {
 //            Message sms = new Message.Builder()
 //                    .body(new Body("we-live-app.herokuapp.com/api/user/" + showId + "/artist-playlist" ))

@@ -64,18 +64,13 @@ h2 {
 }
 
 .end-show-form {
-    display: flex;
-    justify-content: center;
+    margin-left: 2.5%;
 }
 
 .end-show {
     border-color: white;
     color: white;
     background: rgb(250, 106, 95);
-    width: 95%;
-    height: 50%;
-    padding: 3%;
-    margin: 2% 0%;
     font-size: 150%;
 }
 

@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.List;
 
@@ -28,15 +27,12 @@ public class Artist {
     @Column(name="password")
     private String password;
 
-    @Nullable
     @Column(name="bio")
     private String bio;
 
-    @Nullable
     @OneToMany(orphanRemoval = true , cascade = CascadeType.REMOVE)
     private List<Show> shows;
 
-    @Nullable
     @OneToMany
     private List<Playlist> artistPlaylists;
 

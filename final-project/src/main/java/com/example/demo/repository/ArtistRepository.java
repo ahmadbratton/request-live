@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface ArtistRepository extends CrudRepository<Artist, Integer> {
     Artist findByEmail(String email);
-
 }
