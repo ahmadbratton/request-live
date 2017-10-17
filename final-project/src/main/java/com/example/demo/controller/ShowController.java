@@ -276,18 +276,16 @@ public class ShowController {
 
     @GetMapping("/start-show/{showId}")
     public String liveShow(@PathVariable int showId, HttpSession session, Model model) {
-//        if (session.getAttribute("artistId") == null) {
-//            return "redirect:/api/artist/login";
-//        }
+        if (session.getAttribute("artistId") == null) {
+            return "redirect:/api/artist/login";
+        }
         Show currentShow = showRepo.findOne(showId);
 //        Playlist showPlaylist = currentShow.getPlaylist();
 //        List<Song> playlistSongs = showPlaylist.getSongsList();
 
 
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
-        if (session.getAttribute("artistId") == null) {
-            return "redirect:/api/artist/login";
-        }
+
 
         Boolean refresh = Booleans.getRefreshQueue();
 
