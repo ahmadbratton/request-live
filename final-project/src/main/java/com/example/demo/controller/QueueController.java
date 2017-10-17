@@ -39,6 +39,8 @@ public class QueueController {
         selectedSong.setPlaylistVisible(false);
         Queue showQueue = currentShow.getSongQueue();
 
+        Boolean duplicate;
+
         Booleans.setRefreshQueue(true);
 
         System.out.println("user should be set to true " + Booleans.getRefreshQueue());
@@ -64,7 +66,16 @@ public class QueueController {
             return "redirect:/api/ " + showId +"/view-queue";
         } else {
            List<Song> queueSongs = showQueue.getSongs();
-            queueSongs.add(selectedSong);
+
+          duplicate =  queueSongs.contains(selectedSong);
+
+           if (duplicate != true){
+               queueSongs.add(selectedSong);
+           }
+
+
+
+
 
         }
 
