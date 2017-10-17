@@ -245,6 +245,8 @@ public class ShowController {
             MessagingResponse twiml = new MessagingResponse.Builder()
                     .message(sms)
                     .build();
+            System.out.println("this is req " + req.host());
+            System.out.println("this is res " + res.body());
             return twiml.toXml();
         });
         showRepo.save(currentShow);
