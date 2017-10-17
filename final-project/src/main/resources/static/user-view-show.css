@@ -24,14 +24,17 @@ body {
 
 #artist {
     border-color: white;
+
 }
 
 #song {
     border-color: white;
+
 }
 
 #genre {
     border-color: white;
+
 }
 
 #add-song {
@@ -55,4 +58,19 @@ body {
 .tags a{
     color:white;
     margin: 10px;
+}
+.playlist-btn{
+    width:100%;
+    border: none;
+    background: none;
+    color: white;
+    padding-left:0%;
+    padding-right:0%;
+    text-align: inherit;
+
+}
+
+td{
+    padding-left:0%;
+    padding-right:0%;
 }

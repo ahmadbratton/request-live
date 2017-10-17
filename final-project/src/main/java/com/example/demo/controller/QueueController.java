@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Playlist;
-import com.example.demo.model.Queue;
-import com.example.demo.model.Show;
-import com.example.demo.model.Song;
+import com.example.demo.model.*;
 import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.QueueRepository;
 import com.example.demo.repository.ShowRepository;
@@ -41,6 +38,13 @@ public class QueueController {
         Song selectedSong = songRepo.findOne(songId);
         selectedSong.setPlaylistVisible(false);
         Queue showQueue = currentShow.getSongQueue();
+
+        Boolean duplicate;
+
+        Booleans.setRefreshQueue(true);
+
+        System.out.println("user should be set to true " + Booleans.getRefreshQueue());
+
         if(showQueue == null) {
             Queue newQueue = new Queue();
 
@@ -51,6 +55,9 @@ public class QueueController {
             newQueue.setSongs(songQueue);
 
             currentShow.setSongQueue(newQueue);
+
+
+
             try {
                 queueRepo.save(newQueue);
             } catch (Exception ex) {
@@ -59,7 +66,16 @@ public class QueueController {
             return "redirect:/api/ " + showId +"/view-queue";
         } else {
            List<Song> queueSongs = showQueue.getSongs();
-            queueSongs.add(selectedSong);
+
+          duplicate =  queueSongs.contains(selectedSong);
+
+           if (duplicate != true){
+               queueSongs.add(selectedSong);
+           }
+
+
+
+
 
         }
 

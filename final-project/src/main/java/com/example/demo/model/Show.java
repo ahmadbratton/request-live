@@ -55,6 +55,10 @@ public class Show {
     @Column(name="isStarted")
     private Boolean isStarted;
 
+    private static int tempShowId;
+
+
+
     public Show() {
     }
 
@@ -66,12 +70,21 @@ public class Show {
         this.playlist = playlist;
 //        this.songQueue = songQueue;
         this.isStarted = isStarted;
+        this.tempShowId = tempShowId;
     }
 
     public Show(String locationName, String locationAddress) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.isStarted = false;
+    }
+
+    public static int getTempShowId() {
+        return tempShowId;
+    }
+
+    public static void setTempShowId(int tempShowId) {
+        Show.tempShowId = tempShowId;
     }
 
     public String getStartTimeFormatted() {
@@ -195,6 +208,7 @@ public class Show {
                 ", playlist=" + playlist +
                 ", songQueue=" + songQueue +
                 ", isStarted=" + isStarted +
+                ", tempShowId=" + tempShowId +
                 '}';
     }
 
