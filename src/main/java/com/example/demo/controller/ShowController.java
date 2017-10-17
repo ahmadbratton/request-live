@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -147,8 +148,6 @@ public class ShowController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
 
         List<Playlist> allPlaylists = currentArtist.getArtistPlaylists();
-
-
 
         String startString = formatter.format(show.getStartTime());
         String endString = formatter.format(show.getEndTime());

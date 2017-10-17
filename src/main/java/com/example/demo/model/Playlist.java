@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class Playlist {
     @Column(name="playlistName")
     private String playlistName;
 
-    @Nullable
     @ManyToMany
     private List<Song> songsList;
 

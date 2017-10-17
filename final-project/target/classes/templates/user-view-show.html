@@ -35,6 +35,7 @@
     <div th:each="songs: ${showSongs}">
         <form th:action="@{ '/api/' + ${show.showId} + '/' + ${songs.songId}}" th:method="post" >
             <tbody>
+
             <tr >
                 <!--<td id="button-row" >-->
                     <!--<button type="submit" > add to queue </button>-->
