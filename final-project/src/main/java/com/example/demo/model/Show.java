@@ -47,10 +47,14 @@ public class Show {
     @ManyToOne
     private Playlist playlist;
 
+
+
 //    @Column(name="songQueue")
 //    private ArrayList<Song> songQueue;
     @OneToOne
     private Queue songQueue;
+
+
 
     @Column(name="isStarted")
     private Boolean isStarted;
@@ -62,7 +66,7 @@ public class Show {
     public Show() {
     }
 
-    public Show(String locationName, String locationAddress, Date startTime, Date endTime, Playlist playlist, Boolean isStarted) {
+    public Show(String locationName, String locationAddress, Date startTime, Date endTime, Playlist playlist, Boolean isStarted ) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.startTime = startTime;
@@ -71,6 +75,7 @@ public class Show {
 //        this.songQueue = songQueue;
         this.isStarted = isStarted;
         this.tempShowId = tempShowId;
+
     }
 
     public Show(String locationName, String locationAddress) {
@@ -78,6 +83,10 @@ public class Show {
         this.locationAddress = locationAddress;
         this.isStarted = false;
     }
+
+
+
+
 
     public static int getTempShowId() {
         return tempShowId;
