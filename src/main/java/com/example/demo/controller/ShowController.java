@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.*;
-import com.example.demo.repository.ArtistRepository;
-import com.example.demo.repository.PlaylistRepository;
-import com.example.demo.repository.QueueRepository;
-import com.example.demo.repository.ShowRepository;
+import com.example.demo.model.Queue;
+import com.example.demo.repository.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.twilio.twiml.Body;
 import com.twilio.twiml.Message;
@@ -23,9 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static spark.Spark.post;
 import static spark.Spark.redirect;
@@ -47,6 +43,9 @@ public class ShowController {
 
     @Autowired
     QueueRepository queueRepo;
+
+    @Autowired
+    VotesRepository votesRepo;
 
 
     @GetMapping("/create-show")
@@ -346,6 +345,28 @@ public class ShowController {
         String startTime = startString.substring(11, startString.length());
         String endTime = endString.substring(11, endString.length());
 
+        Iterable<Votes> databaseVotes = votesRepo.findAll();
+
+        List<Votes> allVotes = new ArrayList<Votes>();
+
+        List<Votes> showSongVotes = new ArrayList<Votes>();
+
+        databaseVotes.forEach(allVotes::add);
+
+
+
+            for (int i = 0; i < allVotes.size(); i++) {
+               Votes currentVote = allVotes.get(i);
+                if (currentVote.getSongShow().getShowId() == showId) {
+                    showSongVotes.add(currentVote);
+                }
+            }
+            showSongVotes.sort(Comparator.comparing(Votes::getNumberOfVotes).reversed());
+
+
+
+
+        model.addAttribute("songVotes" , showSongVotes);
         model.addAttribute("currentArtist", currentArtist);
         model.addAttribute("currentShow", currentShow);
         model.addAttribute("currentPlaylist", currentPlaylist);
@@ -490,6 +511,8 @@ public class ShowController {
 //
             songsQueue.clear();
         }
+
+        votesRepo.deleteAll();
 //
         showRepo.save(currentShow);
 
