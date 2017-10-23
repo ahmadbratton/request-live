@@ -66,11 +66,8 @@ public class Show {
     public Show() {
     }
 
-<<<<<<< HEAD:src/main/java/com/example/demo/model/Show.java
-    public Show(String locationName, String locationAddress, Date startTime, Date endTime, Playlist playlist, Boolean isStarted, int tempShowId) {
-=======
+
     public Show(String locationName, String locationAddress, Date startTime, Date endTime, Playlist playlist, Boolean isStarted ) {
->>>>>>> e04b5543e881731b7f72ffd16e9b74c1c930e06d:final-project/src/main/java/com/example/demo/model/Show.java
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.startTime = startTime;
