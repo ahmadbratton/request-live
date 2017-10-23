@@ -67,17 +67,19 @@
                     <th>Original Artist</th>
                     <th> Song Name</th>
                     <th> Genre </th>
+                    <th>Votes</th>
                     <th></th>
                 </tr>
                 </thead>
-                <div th:each="song: ${queueSongs}" >
+                <div th:each="vote: ${songVotes}" >
                     <tbody>
                     <tr>
-                        <td th:text="${song.originalArtist}" ></td>
-                        <td  th:text="${song.songName}"> </td>
-                        <td th:text="${song.genre}" ></td>
+                        <td th:text="${vote.songVoted.originalArtist}" ></td>
+                        <td  th:text="${vote.songVoted.songName}"> </td>
+                        <td th:text="${vote.songVoted.genre}" ></td>
+                        <td th:text="${vote.numberOfVotes}" ></td>
                         <td>
-                            <form th:action="@{'/api/' + ${showId} + '/' + ${song.songId} + '/mark-as-played'}" th:method="delete">
+                            <form th:action="@{'/api/' + ${showId} + '/' + ${vote.songVoted.songId} + '/mark-as-played'}" th:method="delete">
                                 <button class="mark-as-played btn btn-outline-dark" type="submit">Mark As Played</button>
                             </form>
                         </td>

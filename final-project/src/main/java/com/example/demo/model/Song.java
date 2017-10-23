@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by duhlig on 8/16/17.
@@ -21,17 +22,22 @@ public class Song {
     @Column(name="genre")
     private String genre;
 
+
     @Column(name="isPlaylistVisible")
     private Boolean isPlaylistVisible;
+
+
 
     public Song() {
     }
 
-    public Song(String originalArtist, String songName, String genre, boolean isPlaylistVisible) {
+    public Song(String originalArtist, String songName, String genre, boolean isPlaylistVisible ) {
         this.originalArtist = originalArtist;
         this.songName = songName;
         this.genre = genre;
         this.isPlaylistVisible = isPlaylistVisible;
+
+
     }
 
     public Boolean getPlaylistVisible() {
@@ -77,22 +83,22 @@ public class Song {
 
         Song song = (Song) o;
 
-        return getSongId() == song.getSongId();
+        if (getSongId() != song.getSongId()) return false;
+        if (getOriginalArtist() != null ? !getOriginalArtist().equals(song.getOriginalArtist()) : song.getOriginalArtist() != null)
+            return false;
+        if (getSongName() != null ? !getSongName().equals(song.getSongName()) : song.getSongName() != null)
+            return false;
+        if (getGenre() != null ? !getGenre().equals(song.getGenre()) : song.getGenre() != null) return false;
+        return isPlaylistVisible != null ? isPlaylistVisible.equals(song.isPlaylistVisible) : song.isPlaylistVisible == null;
     }
 
     @Override
     public int hashCode() {
-        return getSongId();
-    }
-
-    @Override
-    public String toString() {
-        return "Song{" +
-                "songId=" + songId +
-                ", originalArtist='" + originalArtist + '\'' +
-                ", songName='" + songName + '\'' +
-                ", genre='" + genre + '\'' +
-                ", isPlaylistVisible=" + isPlaylistVisible +
-                '}';
+        int result = getSongId();
+        result = 31 * result + (getOriginalArtist() != null ? getOriginalArtist().hashCode() : 0);
+        result = 31 * result + (getSongName() != null ? getSongName().hashCode() : 0);
+        result = 31 * result + (getGenre() != null ? getGenre().hashCode() : 0);
+        result = 31 * result + (isPlaylistVisible != null ? isPlaylistVisible.hashCode() : 0);
+        return result;
     }
 }

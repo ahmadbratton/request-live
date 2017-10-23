@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.*;
-import com.example.demo.repository.PlaylistRepository;
-import com.example.demo.repository.QueueRepository;
-import com.example.demo.repository.ShowRepository;
-import com.example.demo.repository.SongRepository;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +29,9 @@ public class QueueController {
     @Autowired
     PlaylistRepository playlistRepo;
 
+    @Autowired
+    VotesRepository VotesRepo;
+
     @PostMapping("/{showId}/{songId}")
     public String addSong(@PathVariable int showId, @PathVariable int songId) {
         Show currentShow = showRepo.findOne(showId);
@@ -38,6 +39,8 @@ public class QueueController {
         Song selectedSong = songRepo.findOne(songId);
         selectedSong.setPlaylistVisible(false);
         Queue showQueue = currentShow.getSongQueue();
+
+
 
         Boolean duplicate;
 
@@ -59,6 +62,7 @@ public class QueueController {
 
 
             try {
+
                 queueRepo.save(newQueue);
             } catch (Exception ex) {
                 return "problem making que or adding song to queue";
@@ -73,6 +77,50 @@ public class QueueController {
                queueSongs.add(selectedSong);
            }
 
+           Iterable<Votes> databaseVotes = VotesRepo.findAll();
+           List<Votes> songShowVotes = new ArrayList<Votes>();
+
+           databaseVotes.forEach(songShowVotes::add);
+
+
+
+
+
+
+
+
+
+               if (songShowVotes.size() <= 0 ){
+                   Votes newVote = new Votes();
+                   newVote.setSongVoted(selectedSong);
+                   newVote.setSongShow(currentShow);
+                   VotesRepo.save(newVote);
+               }
+               else {
+                   Boolean exist = false;
+                   Votes currentVote = new Votes();
+                   for (int i = 0; i < songShowVotes.size(); i++) {
+                       currentVote = songShowVotes.get(i);
+                       if (currentVote.getSongShow().getShowId() == showId && currentVote.getSongVoted().getSongId() == songId) {
+                            currentVote.setNumberOfVotes(currentVote.getNumberOfVotes() + 1 );
+                            exist = true;
+                       }
+                   }
+                   if (!exist){
+                       Votes newVote = new Votes();
+                       newVote.setSongVoted(selectedSong);
+                       newVote.setSongShow(currentShow);
+                       VotesRepo.save(newVote);
+                   }
+
+                   if (exist)
+
+                   VotesRepo.save(currentVote);
+
+               }
+
+
+
 
 
 
@@ -84,6 +132,8 @@ public class QueueController {
         } catch (Exception ex) {
             return "problem adding song to queue";
         }
+
+
         return "redirect:/api/" + showId +"/view-queue";
     }
 

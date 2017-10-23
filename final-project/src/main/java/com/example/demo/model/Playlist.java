@@ -18,6 +18,8 @@ public class Playlist {
     @Column(name="playlistName")
     private String playlistName;
 
+
+
     @ManyToMany
     private List<Song> songsList;
 
